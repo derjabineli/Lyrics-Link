@@ -10,3 +10,21 @@ export async function getPCCredentials(code) {
   const accessData = await data.json();
   return accessData;
 }
+
+export async function getSongs(accessToken) {
+  let myHeaders = new Headers();
+  myHeaders.append("Authorization", `Bearer ${accessToken}`);
+
+  let requestOptions = {
+    method: "GET",
+    headers: myHeaders,
+    redirect: "follow",
+  };
+
+  const songs = await fetch(
+    "https://api.planningcenteronline.com/services/v2/songs",
+    requestOptions
+  );
+
+  return songs;
+}
