@@ -6,6 +6,7 @@ nav {
   padding: 2rem 8rem;
   display: flex;
   justify-content: space-between;
+  align-items: center;
 }
 
 nav a {
@@ -18,4 +19,5 @@ nav ul {
   list-style: none;
   display: flex;
   gap: 4rem;
+  align-items: center;
 }
