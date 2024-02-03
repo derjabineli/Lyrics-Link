@@ -1,15 +1,15 @@
-import React, { useEffect } from "react";
+import React, { useEffect, useState } from "react";
 import "./Dashboard.css";
 import DashNavBar from "../components/DashNavBar";
+import Events from "../components/Events";
 
 function DashBoard(props) {
-  useEffect(() => {
-    console.log(props.user);
-  }, []);
+  const userPhoto = props.user.attributes.photo_url;
+  console.log(props.user);
   return (
     <div>
-      <DashNavBar />
-      <h1>Dashboard</h1>
+      <DashNavBar userPhoto={userPhoto} />
+      <Events />
     </div>
   );
 }

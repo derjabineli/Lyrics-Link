@@ -3,20 +3,19 @@ import "./navbar.css";
 import "./DashNav.css";
 import image from "../images/temp.jpg";
 
-function DashNavBar() {
+function DashNavBar(props) {
   return (
     <nav>
       <a href="/">LyricsLink.</a>
       <ul>
         <li>
-          {" "}
-          <a href="/">Login</a>
+          <a href="http://localhost:3005/api/logout">Logout</a>
         </li>
         <li>
           {" "}
           <a href="/">
             <img
-              src="https://avatars.githubusercontent.com/u/69370608?v=4"
+              src={props.userPhoto}
               alt="profile_photo"
               className="profilePhoto"
             />
