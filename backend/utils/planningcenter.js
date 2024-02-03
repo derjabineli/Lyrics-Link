@@ -21,10 +21,32 @@ export async function getSongs(accessToken) {
     redirect: "follow",
   };
 
-  const songs = await fetch(
+  const data = await fetch(
     "https://api.planningcenteronline.com/services/v2/songs",
     requestOptions
   );
 
+  const songs = await data.json();
+
   return songs;
+}
+
+export async function getUser(accessToken) {
+  let myHeaders = new Headers();
+  myHeaders.append("Authorization", `Bearer ${accessToken}`);
+
+  let requestOptions = {
+    method: "GET",
+    headers: myHeaders,
+    redirect: "follow",
+  };
+
+  const data = await fetch(
+    "https://api.planningcenteronline.com/services/v2/me",
+    requestOptions
+  );
+
+  const user = await data.json();
+
+  return user;
 }
