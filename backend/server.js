@@ -57,13 +57,18 @@ app.get("/callback", async (req, res) => {
   req.session.scope = accessData.scope;
   req.session.created_at = accessData.created_at;
 
-  const user = await getSongs(req.session.access_token);
-  const id = user.id;
-  console.log(id);
+  const user = await getUser(req.session.access_token);
 
-  // pool.query(
-  //   `INSERT INTO users (id, name, photo_url VALUES (${user.id}, ${user.attributes.full_name}, ${user.attributes.photo_url}) ON CONFLICT (id) DO UPDATE SET name = ${user.attributes.full_name}, photo_url = ${user.attributes.photo_url};`
-  // );
+  req.session.user_id = user.data.id;
+
+  pool.query({
+    text: "INSERT INTO users (id, name, photo_url) VALUES ($1, $2, $3) ON CONFLICT (id) DO UPDATE SET name = $2, photo_url = $3",
+    values: [
+      user.data.id,
+      user.data.attributes.full_name,
+      user.data.attributes.photo_url,
+    ],
+  });
 
   res.redirect("http://localhost:3000");
 });
