@@ -43,6 +43,11 @@ app.get("/login", async (req, res) => {
   );
 });
 
+app.get("/api/logout", (req, res) => {
+  req.session.destroy();
+  res.redirect("http://localhost:3000/");
+});
+
 app.get("/callback", async (req, res) => {
   console.log(req.query.code);
   const code = req.query.code;
@@ -73,11 +78,6 @@ app.get("/callback", async (req, res) => {
   res.redirect("http://localhost:3000");
 });
 
-app.get("/api/logout", (req, res) => {
-  req.session.destroy();
-  res.redirect("http://localhost:3000/");
-});
-
 app.get("/api/user", async (req, res) => {
   try {
     const user = await getUser(req.session.access_token);
@@ -95,6 +95,12 @@ app.get("/api/events", async (req, res) => {
     });
     res.send(events.rows);
   } catch (error) {}
+});
+
+app.get("/api/songs", async (req, res) => {
+  const search = req.query.search;
+  const data = await getSongs(req.session.access_token, search);
+  res.send(data);
 });
 
 app.post("/api/addSong", async (req, res) => {
