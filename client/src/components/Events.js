@@ -1,13 +1,21 @@
-import React from "react";
+import React, { useEffect, useState } from "react";
 import "./Events.css";
 import Event from "./Event";
 
 function Events() {
-  const services = [
-    { name: "Small Group", date: "01-29-2024", songCount: 3 },
-    { name: "Small Group", date: "02-03-2024", songCount: 4 },
-    { name: "Small Group", date: "02-10-2024", songCount: 3 },
-  ];
+  const [events, setEvents] = useState([]);
+
+  useEffect(() => {
+    fetch("/api/events")
+      .then((res) => res.json())
+      .then((data) => {
+        setEvents((oldArray) => [...data]);
+      });
+  }, []);
+
+  useEffect(() => {
+    console.log(events);
+  }, [events]);
 
   return (
     <div className="container">
@@ -16,11 +24,11 @@ function Events() {
         <button className="ctaBtn events_button">Add New Event</button>
       </div>
       <div className="events">
-        {services.map((service) => (
+        {events.map((service) => (
           <Event
-            name={service.name}
-            date={service.date}
-            songCount={service.songCount}
+            name={service.event_type}
+            date={service.event_date.substring(0, 10)}
+            songCount={service.songs.length}
           />
         ))}
       </div>
