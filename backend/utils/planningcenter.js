@@ -11,7 +11,7 @@ export async function getPCCredentials(code) {
   return accessData;
 }
 
-export async function getSongs(accessToken) {
+export async function getSongs(accessToken, title) {
   let myHeaders = new Headers();
   myHeaders.append("Authorization", `Bearer ${accessToken}`);
 
@@ -22,7 +22,7 @@ export async function getSongs(accessToken) {
   };
 
   const data = await fetch(
-    "https://api.planningcenteronline.com/services/v2/songs",
+    `https://api.planningcenteronline.com/services/v2/songs?where[title]= ${title}`,
     requestOptions
   );
 
