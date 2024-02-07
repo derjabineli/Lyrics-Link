@@ -3,34 +3,35 @@ import "./SongSearch.css";
 import Event from "./Event";
 
 function SongSearch() {
-  const [events, setEvents] = useState([]);
+  const [input, setInput] = useState("");
+  const [results, setResults] = useState([]);
 
-  useEffect(() => {
-    fetch("/api/events")
+  const fetchSongs = async (search) => {
+    fetch(`/api/songs?search=${search}`)
       .then((res) => res.json())
       .then((data) => {
-        setEvents((oldArray) => [...data]);
+        console.log(data.data);
+        setResults(data.data);
       });
-  }, []);
+  };
 
-  useEffect(() => {
-    console.log(events);
-  }, [events]);
+  const handleChange = (value) => {
+    setInput(value);
+    fetchSongs(value);
+  };
 
   return (
     <div className="container">
       <div className="events_header">
-        <h1>Events</h1>
-        <button className="ctaBtn events_button">Add New Event</button>
+        <h1>Songs</h1>
       </div>
-      <div className="events">
-        {events.map((service) => (
-          <Event
-            name={service.event_type}
-            date={service.event_date.substring(0, 10)}
-            songCount={service.songs.length}
-          />
-        ))}
+      <div>
+        <input
+          className="song_searchbar"
+          placeholder="Search for a Song"
+          value={input}
+          onChange={(e) => handleChange(e.target.value)}
+        />
       </div>
     </div>
   );
