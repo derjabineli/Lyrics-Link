@@ -1,0 +1,8 @@
+.song_searchbar {
+  width: 100%;
+  background-color: transparent;
+  border: 1px solid white;
+  border-radius: 10px;
+  padding: 10px 16px;
+  color: white;
+}
