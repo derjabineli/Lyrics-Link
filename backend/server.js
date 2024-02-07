@@ -87,6 +87,16 @@ app.get("/api/user", async (req, res) => {
   }
 });
 
+app.get("/api/events", async (req, res) => {
+  try {
+    const events = await pool.query({
+      text: "SELECT * FROM events WHERE user_id = $1",
+      values: [req.session.user_id],
+    });
+    res.send(events.rows);
+  } catch (error) {}
+});
+
 app.post("/api/addSong", async (req, res) => {
   const { id, title, admin, author, ccli, copyright, links } = req.body;
 
