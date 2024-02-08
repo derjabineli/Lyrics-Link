@@ -6,3 +6,14 @@
   padding: 10px 16px;
   color: white;
 }
+
+.songs_container {
+  border: 1px solid white;
+  border-radius: 10px;
+  max-height: 400px;
+  overflow-y: auto;
+}
+
+.song_results {
+  padding: 10px;
+}
