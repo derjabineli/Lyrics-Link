@@ -1,7 +1,6 @@
 import React from "react";
 import "./navbar.css";
 import "./DashNav.css";
-import image from "../images/temp.jpg";
 
 function DashNavBar(props) {
   return (
