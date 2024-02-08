@@ -4,8 +4,8 @@ import "./Song.css";
 function Song({ id, title, author, link }) {
   return (
     <div className="song">
-      <p>{title}</p>
-      <p>{author}</p>
+      <p className="song_title">{title}</p>
+      <p className="song_author">{author}</p>
     </div>
   );
 }

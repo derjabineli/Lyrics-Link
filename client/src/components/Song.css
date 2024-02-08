@@ -1,0 +1,16 @@
+.song {
+  border-bottom: 1px solid white;
+}
+
+.song:hover {
+  background-color: hsl(0, 0%, 65%);
+  cursor: pointer;
+}
+
+.song_title {
+  font-weight: bold;
+}
+
+.song_author {
+  font-size: 12px;
+}
