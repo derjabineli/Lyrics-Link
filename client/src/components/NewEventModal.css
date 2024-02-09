@@ -1,0 +1,37 @@
+.overlay {
+  position: fixed;
+  height: 100%;
+  width: 100%;
+  background-color: rgba(0, 0, 0, 0.8);
+  top: 0;
+  z-index: 2;
+}
+
+.modal_container {
+  margin: 40px auto;
+  width: 400px;
+  background-color: black;
+  box-shadow: 0px 0px 18px 0px #f1f1f1;
+  border-radius: 10px;
+}
+
+.event_name {
+  background-color: transparent;
+  border: 1px solid rgba(255, 255, 255, 0.232);
+  border-radius: 10px;
+  padding: 4px 16px;
+  color: white;
+}
+
+@media screen and (min-width: 480px) {
+  .modal_container {
+    width: 400px;
+  }
+}
+
+@media screen and (min-width: 1100px) {
+  .modal_container {
+    width: 1000px;
+    padding: 20px;
+  }
+}
