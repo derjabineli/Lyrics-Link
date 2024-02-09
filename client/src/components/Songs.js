@@ -9,23 +9,21 @@ function Songs() {
   let searchTimer;
 
   const fetchSongs = async (search) => {
+    const res = await fetch(`/api/songs?search=${search}`);
+    const data = await res.json();
+    setResults(data.data);
+
     if (search.length != 0) {
       setSearched(true);
     } else {
       setSearched(false);
     }
-
-    fetch(`/api/songs?search=${search}`)
-      .then((res) => res.json())
-      .then((data) => {
-        setResults(data.data);
-      });
   };
 
   const handleChange = (value) => {
     setInput(value);
-    clearTimeout(searchTimer); // Clear the previous timer
-    searchTimer = setTimeout(() => fetchSongs(value), 500); // Set a new timer
+    clearTimeout(searchTimer);
+    searchTimer = setTimeout(() => fetchSongs(value), 500);
   };
 
   return (

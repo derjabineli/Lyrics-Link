@@ -4,6 +4,12 @@
   align-items: center;
 }
 
+.events {
+  display: flex;
+  justify-content: flex-start;
+  flex-wrap: wrap;
+}
+
 .events_button {
   max-height: 40px;
   padding: 8px 18px;

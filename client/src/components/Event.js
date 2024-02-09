@@ -1,14 +1,9 @@
-import React from "react";
+import React, { useState } from "react";
 import "./Event.css";
 
 function Event({ name, date, songCount }) {
   return (
-    <div
-      className="event"
-      onClick={() => {
-        console.log("Clicked!!");
-      }}
-    >
+    <div className="event">
       <h3>{name}</h3>
       <hr />
       <p>{date}</p>

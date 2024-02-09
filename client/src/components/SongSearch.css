@@ -11,8 +11,5 @@
   border: 1px solid white;
   border-radius: 10px;
   max-height: 400px;
-  overflow-y: auto;
-}
-
-.song_results {
+  overflow: scroll;
 }

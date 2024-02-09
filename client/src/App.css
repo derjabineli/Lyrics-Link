@@ -96,8 +96,8 @@ main {
 }
 
 .container {
-  max-width: 200px;
-  margin: 20px auto;
+  max-width: 300px;
+  margin: 0px auto;
   text-align: left;
 }
 
