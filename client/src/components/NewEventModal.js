@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useState } from "react";
 import "./NewEventModal.css";
 import Songs from "./Songs.js";
 
@@ -27,6 +27,7 @@ const NewEventModal = ({ open, onClose }) => {
           <h2>Date</h2>
           <input type="date" id="date" />
           <Songs />
+          <button className="ctaBtn create_event_btn">Create</button>
         </form>
       </div>
     </div>
