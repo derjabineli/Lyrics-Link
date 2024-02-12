@@ -3,6 +3,10 @@ import "./NewEventModal.css";
 import Songs from "./Songs.js";
 
 const NewEventModal = ({ open, onClose }) => {
+  const [name, setName] = useState("");
+  const [date, setDate] = useState("");
+  const [songs, setSongs] = useState([]);
+
   if (!open) return null;
 
   return (
@@ -22,11 +26,21 @@ const NewEventModal = ({ open, onClose }) => {
             type="text"
             name="name"
             id="name"
+            value={name}
+            onChange={(e) => {
+              setName(e.target.value);
+            }}
             required
           />
           <h2>Date</h2>
-          <input type="date" id="date" />
-          <Songs />
+          <input
+            type="date"
+            id="date"
+            onChange={(e) => {
+              setDate(e.target.value);
+            }}
+          />
+          <Songs setSongs={setSongs} />
           <button className="ctaBtn create_event_btn">Create</button>
         </form>
       </div>
