@@ -13,7 +13,6 @@ export async function getPCCredentials(code) {
 
 export async function getSongs(accessToken, title) {
   const query = title.split(" ").join("+");
-  console.log(query);
 
   let myHeaders = new Headers();
   myHeaders.append("Authorization", `Bearer ${accessToken}`);
