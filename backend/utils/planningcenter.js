@@ -12,6 +12,9 @@ export async function getPCCredentials(code) {
 }
 
 export async function getSongs(accessToken, title) {
+  const query = title.split(" ").join("+");
+  console.log(query);
+
   let myHeaders = new Headers();
   myHeaders.append("Authorization", `Bearer ${accessToken}`);
 
@@ -22,7 +25,7 @@ export async function getSongs(accessToken, title) {
   };
 
   const data = await fetch(
-    `https://api.planningcenteronline.com/services/v2/songs?where[title]= ${title}`,
+    `https://api.planningcenteronline.com/services/v2/songs?where[title]=${query}`,
     requestOptions
   );
 
