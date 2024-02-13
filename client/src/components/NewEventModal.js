@@ -7,6 +7,26 @@ const NewEventModal = ({ open, onClose }) => {
   const [date, setDate] = useState("");
   const [songs, setSongs] = useState([]);
 
+  const handleCreate = async (e) => {
+    e.preventDefault();
+    const data = { name: name, date: date, songs: songs };
+
+    const response = await fetch("/api/events", {
+      method: "POST",
+      headers: {
+        "Content-Type": "application/json",
+      },
+      credentials: "same-origin",
+      body: JSON.stringify(data),
+    });
+
+    const result = await response.json();
+    console.log(result);
+    // if (createdEvent.status === 201) {
+    //   navigate("/");
+    // }
+  };
+
   if (!open) return null;
 
   return (
@@ -25,7 +45,7 @@ const NewEventModal = ({ open, onClose }) => {
             className="event_name"
             type="text"
             name="name"
-            id="name"
+            id="event_type"
             value={name}
             onChange={(e) => {
               setName(e.target.value);
@@ -41,7 +61,11 @@ const NewEventModal = ({ open, onClose }) => {
             }}
           />
           <Songs setSongs={setSongs} />
-          <button className="ctaBtn create_event_btn">Create</button>
+          <input name="songs" value={songs} />
+          <br />
+          <button onClick={handleCreate} className="ctaBtn create_event_btn">
+            Create
+          </button>
         </form>
       </div>
     </div>
