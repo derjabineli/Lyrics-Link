@@ -5,26 +5,13 @@ import DashNavBar from "../components/DashNavBar";
 
 const EventEdit = (props) => {
   const { id } = useParams();
-  const [eventObject, setEventObject] = useState({});
 
   const userPhoto = props.user.attributes.photo_url;
-
-  useEffect(() => {
-    const getEvent = () => {
-      const data = fetch(`/api/event/?id=${id}`)
-        .then((response) => response.json())
-        .then((data) => {
-          setEventObject(data.rows[0]);
-        });
-    };
-
-    getEvent();
-  }, []);
 
   return (
     <div>
       <DashNavBar userPhoto={userPhoto} />
-      <EditEvent event={eventObject} />
+      <EditEvent id={id} />
     </div>
   );
 };
