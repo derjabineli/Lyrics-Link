@@ -9,8 +9,11 @@ function Song({ id, title, author, link, setSongs }) {
   return (
     <div onClick={addSongToEvent}>
       <div className="song">
-        <p className="song_title">{title}</p>
-        <p className="song_author">{author}</p>
+        <div className="song_top">
+          <p className="song_title">{title}</p>
+          <p className="song_details">#{id}</p>
+        </div>
+        <p className="song_details">{author}</p>
       </div>
     </div>
   );
