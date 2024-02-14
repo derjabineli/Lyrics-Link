@@ -3,6 +3,7 @@ import "./App.css";
 import { BrowserRouter as Router, Route, Routes } from "react-router-dom";
 import Login from "./routes/Login";
 import DashBoard from "./routes/DashBoard";
+import EventEdit from "./routes/EventEdit";
 
 function App() {
   const [loggedIn, setLoggedIn] = useState(false);
@@ -29,6 +30,9 @@ function App() {
         <Routes>
           {!loggedIn && <Route path="/login" element={<Login />} />}
           {loggedIn && <Route path="/" element={<DashBoard user={user} />} />}
+          {loggedIn && (
+            <Route path="/event/:id/update" element={<EventEdit />} />
+          )}
         </Routes>
       </Router>
     </div>
