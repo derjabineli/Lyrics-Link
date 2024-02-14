@@ -8,7 +8,6 @@ const NewEventModal = ({ open, onClose }) => {
   const [songs, setSongs] = useState([]);
 
   const handleCreate = async (e) => {
-    e.preventDefault();
     const data = { name: name, date: date, songs: songs };
 
     const response = await fetch("/api/events", {
