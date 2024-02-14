@@ -2,7 +2,7 @@ import React, { useEffect, useState } from "react";
 import "./SongSearch.css";
 import Song from "./Song";
 
-function Songs() {
+function Songs(props) {
   const [input, setInput] = useState("");
   const [results, setResults] = useState([]);
   const [searched, setSearched] = useState(false);
@@ -28,7 +28,7 @@ function Songs() {
 
   return (
     <div className="container">
-      <div className="events_header">
+      <div className="songs_header">
         <h1>Songs</h1>
       </div>
       <div className="songs_container">
@@ -46,6 +46,7 @@ function Songs() {
                   id={song.id}
                   title={song.attributes.title}
                   author={song.attributes.author}
+                  setSongs={props.setSongs}
                 />
               ))
             ) : (
