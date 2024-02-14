@@ -15,6 +15,12 @@
   padding: 8px 18px;
 }
 
+.events_link:visited,
+.events_link:hover {
+  text-decoration: none;
+  color: inherit;
+}
+
 @media screen and (min-width: 480px) {
 }
 
