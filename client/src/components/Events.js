@@ -34,11 +34,14 @@ function Events() {
         </div>
         <div className="events">
           {events.map((service) => (
-            <Event
-              name={service.event_type}
-              date={service.event_date.substring(0, 10)}
-              songCount={service.songs.length}
-            />
+            <a href={`event/${service.id}/update`}>
+              <Event
+                id={service.id}
+                name={service.event_type}
+                date={service.event_date.substring(0, 10)}
+                songCount={service.songs.length}
+              />
+            </a>
           ))}
         </div>
       </div>
