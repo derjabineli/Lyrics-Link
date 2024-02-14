@@ -34,7 +34,7 @@ function Events() {
         </div>
         <div className="events">
           {events.map((service) => (
-            <a href={`event/${service.id}/update`}>
+            <a href={`event/${service.id}/update`} className="events_link">
               <Event
                 id={service.id}
                 name={service.event_type}
