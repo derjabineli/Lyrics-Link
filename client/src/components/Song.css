@@ -3,6 +3,12 @@
   padding: 10px;
 }
 
+.song_top {
+  display: flex;
+  align-items: baseline;
+  gap: 10px;
+}
+
 .song:hover {
   background-color: hsl(0, 0%, 65%);
   cursor: pointer;
@@ -12,6 +18,6 @@
   font-weight: bold;
 }
 
-.song_author {
+.song_details {
   font-size: 12px;
 }
