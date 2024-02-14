@@ -6,7 +6,6 @@ import Songs from "../components/Songs";
 
 function DashBoard(props) {
   const userPhoto = props.user.attributes.photo_url;
-  console.log(props.user);
   return (
     <div>
       <DashNavBar userPhoto={userPhoto} />
