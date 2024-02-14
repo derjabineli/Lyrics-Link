@@ -1,15 +1,38 @@
+.songs_header {
+  display: none;
+}
+
 .song_searchbar {
-  width: 100%;
-  background-color: transparent;
-  border: 1px solid white;
-  border-radius: 10px;
-  padding: 10px 16px;
-  color: white;
+  display: none;
 }
 
 .songs_container {
-  border: 1px solid white;
-  border-radius: 10px;
-  max-height: 400px;
-  overflow: scroll;
+  display: none;
+}
+
+@media screen and (min-width: 480px) {
+  .songs_header {
+    display: block;
+  }
+
+  .song_searchbar {
+    display: block;
+    width: 100%;
+    background-color: transparent;
+    border: 1px solid white;
+    border-radius: 10px;
+    padding: 10px 16px;
+    color: white;
+  }
+
+  .songs_container {
+    display: block;
+    border: 1px solid white;
+    border-radius: 10px;
+    max-height: 400px;
+    overflow: scroll;
+  }
+}
+
+@media screen and (min-width: 1100px) {
 }

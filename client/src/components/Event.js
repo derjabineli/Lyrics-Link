@@ -1,7 +1,9 @@
 import React, { useState } from "react";
 import "./Event.css";
 
-function Event({ name, date, songCount }) {
+function Event({ name, date, songCount, id }) {
+  console.log(id);
+
   return (
     <div className="event">
       <h3>{name}</h3>
