@@ -111,13 +111,20 @@ app.get("/api/events", async (req, res) => {
 });
 
 app.post("/api/events", async (req, res) => {
-  const event_id = Math.random().toString(20).substring(2, 10);
+  let event_id;
+  if (req.body.id === undefined) {
+    event_id = Math.random().toString(20).substring(2, 10);
+  } else {
+    event_id = req.body.id;
+  }
+
+  console.log(req.body.id);
   const { name, date, songs } = req.body;
   const user_id = req.session.user_id;
 
   try {
     const events = await pool.query({
-      text: "INSERT INTO events (id, event_type, event_date, songs, user_id) VALUES ($1, $2, $3, $4, $5)",
+      text: "INSERT INTO events (id, event_type, event_date, songs, user_id) VALUES ($1, $2, $3, $4, $5) ON CONFLICT (id) DO UPDATE SET event_type = $2, event_date = $3, songs = $4",
       values: [event_id, name, date, songs, user_id],
     });
     console.log(events);
