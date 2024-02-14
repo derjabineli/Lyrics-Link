@@ -28,10 +28,13 @@ function App() {
     <div className="App">
       <Router>
         <Routes>
-          {!loggedIn && <Route path="/login" element={<Login />} />}
+          {!loggedIn && <Route path="/" element={<Login />} />}
           {loggedIn && <Route path="/" element={<DashBoard user={user} />} />}
           {loggedIn && (
-            <Route path="/event/:id/update" element={<EventEdit />} />
+            <Route
+              path="/event/:id/update"
+              element={<EventEdit user={user} />}
+            />
           )}
         </Routes>
       </Router>
