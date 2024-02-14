@@ -45,11 +45,10 @@ app.get("/login", async (req, res) => {
 
 app.get("/api/logout", (req, res) => {
   req.session.destroy();
-  res.redirect("http://localhost:3000/");
+  res.redirect("http://localhost:3000/login");
 });
 
 app.get("/callback", async (req, res) => {
-  console.log(req.query.code);
   const code = req.query.code;
   if (!code) {
     res.redirect("/login");
@@ -66,7 +65,7 @@ app.get("/callback", async (req, res) => {
 
   req.session.user_id = user.data.id;
 
-  pool.query({
+  const queryStatus = await pool.query({
     text: "INSERT INTO users (id, name, photo_url) VALUES ($1, $2, $3) ON CONFLICT (id) DO UPDATE SET name = $2, photo_url = $3",
     values: [
       user.data.id,
@@ -75,7 +74,9 @@ app.get("/callback", async (req, res) => {
     ],
   });
 
-  res.redirect("http://localhost:3000");
+  req.session.save(() => {
+    res.redirect("http://localhost:3000");
+  });
 });
 
 app.get("/api/user", async (req, res) => {
@@ -87,6 +88,18 @@ app.get("/api/user", async (req, res) => {
   }
 });
 
+app.get("/api/event", async (req, res) => {
+  const { id } = req.query;
+  console.log(id);
+
+  const event = await pool.query({
+    text: "SELECT * FROM events WHERE id = $1",
+    values: [id],
+  });
+  console.log(event.rows);
+  res.send(event);
+});
+
 app.get("/api/events", async (req, res) => {
   try {
     const events = await pool.query({
@@ -95,6 +108,24 @@ app.get("/api/events", async (req, res) => {
     });
     res.send(events.rows);
   } catch (error) {}
+});
+
+app.post("/api/events", async (req, res) => {
+  const event_id = Math.random().toString(20).substring(2, 10);
+  const { name, date, songs } = req.body;
+  const user_id = req.session.user_id;
+
+  try {
+    const events = await pool.query({
+      text: "INSERT INTO events (id, event_type, event_date, songs, user_id) VALUES ($1, $2, $3, $4, $5)",
+      values: [event_id, name, date, songs, user_id],
+    });
+    console.log(events);
+
+    res.redirect("http://localhost:3000");
+  } catch (error) {
+    console.log(error);
+  }
 });
 
 app.get("/api/songs", async (req, res) => {
