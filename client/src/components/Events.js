@@ -15,10 +15,6 @@ function Events() {
       });
   }, []);
 
-  useEffect(() => {
-    console.log(events);
-  }, [events]);
-
   return (
     <>
       <NewEventModal open={showModal} onClose={() => setShowModal(false)} />
