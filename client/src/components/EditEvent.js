@@ -1,4 +1,5 @@
 import React, { useState, useEffect } from "react";
+import "./EditEvent.css";
 import Songs from "./Songs";
 
 const EditEvent = ({ id }) => {
@@ -40,10 +41,19 @@ const EditEvent = ({ id }) => {
     // }
   };
 
+  const handleLive = (e) => {
+    e.preventDefault();
+  };
+
   return (
     <div className="container">
       <form>
-        <h1>Create New Event</h1>
+        <div className="top">
+          <h1>Edit</h1>
+          <button className="ctaBtn live_btn" onClick={handleLive}>
+            See Live
+          </button>
+        </div>
         <hr />
         <h2>Event Name</h2>
         <input
@@ -67,7 +77,13 @@ const EditEvent = ({ id }) => {
           }}
         />
         <Songs setSongs={setEventSongs} />
-        <input name="songs" value={eventSongs} />
+        <input
+          name="songs"
+          value={eventSongs}
+          onChange={(e) => {
+            setEventSongs(e.target.value);
+          }}
+        />
         <br />
         <button onClick={handleSave} className="ctaBtn create_event_btn">
           Save
