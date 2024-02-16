@@ -43,14 +43,25 @@ export async function getSong(accessToken, id) {
     redirect: "follow",
   };
 
-  const data = await fetch(
+  const songFetch = await fetch(
     `https://api.planningcenteronline.com/services/v2/songs/${id}`,
     requestOptions
   );
 
-  const song = await data.json();
+  const songDataFetch = await fetch(
+    `https://api.planningcenteronline.com/services/v2/songs/${id}/arrangements`,
+    requestOptions
+  );
 
-  return song;
+  const song = await songFetch.json();
+  const songData = await songDataFetch.json();
+
+  const songObj = {
+    title: song.data.attributes.title,
+    data: songData.data[0],
+  };
+
+  return songObj;
 }
 
 export async function getUser(accessToken) {
