@@ -1,7 +1,26 @@
-import React, { useEffect, useState } from "react";
+import React from "react";
 import "./Song.css";
 
 function Song({ id, title, author, link, setSongs }) {
+  // const handleCreate = async (e) => {
+  //   const data = { name: name, date: date, songs: songs };
+
+  //   const response = await fetch("/api/events", {
+  //     method: "POST",
+  //     headers: {
+  //       "Content-Type": "application/json",
+  //     },
+  //     credentials: "same-origin",
+  //     body: JSON.stringify(data),
+  //   });
+
+  //   const result = await response.json();
+  //   console.log(result);
+  //   // if (createdEvent.status === 201) {
+  //   //   navigate("/");
+  //   // }
+  // };
+
   const addSongToEvent = () => {
     setSongs((prevSongs) => [...prevSongs, id]);
   };
