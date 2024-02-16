@@ -1,28 +1,40 @@
 import React, { useState, useEffect } from "react";
+import { useNavigate } from "react-router-dom";
 import "./EditEvent.css";
 import Songs from "./Songs";
+import SongCard from "./SongCard";
 
 const EditEvent = ({ id }) => {
+  const navigate = useNavigate();
+
   const [name, setName] = useState("");
   const [date, setDate] = useState("");
   const [eventSongs, setEventSongs] = useState([]);
 
-  useEffect(() => {
-    const getEvent = () => {
-      fetch(`/api/event/?id=${id}`)
-        .then((response) => response.json())
-        .then((data) => {
-          const event = data.rows[0];
-          setName(event.event_type);
-          setDate(event.event_date.substring(0, 10));
-          setEventSongs(event.songs);
-        });
-    };
+  const getEvent = () => {
+    fetch(`/api/event/?id=${id}`)
+      .then((response) => response.json())
+      .then((data) => {
+        const event = data.rows[0];
+        setName(event.event_type);
+        setDate(event.event_date.substring(0, 10));
+        setEventSongs(event.songs);
+      });
+  };
 
+  useEffect(() => {
     getEvent();
   }, []);
 
+  const fetchSong = async (songId) => {
+    const res = await fetch(`/api/song/?id=${songId}`);
+    const data = await res.json();
+    return data;
+  };
+
   const handleSave = async (e) => {
+    e.preventDefault();
+
     const data = { id: id, name: name, date: date, songs: eventSongs };
 
     const response = await fetch("/api/events", {
@@ -34,15 +46,23 @@ const EditEvent = ({ id }) => {
       body: JSON.stringify(data),
     });
 
-    const result = await response.json();
-    console.log(result);
-    // if (createdEvent.status === 201) {
-    //   navigate("/");
-    // }
+    if (response.status === 200) {
+      navigate("/");
+    }
   };
 
-  const handleLive = (e) => {
-    e.preventDefault();
+  const removeSong = (itemId) => {
+    console.log(itemId);
+    const index = eventSongs.indexOf(itemId);
+    console.log(index);
+    const oldArray = eventSongs;
+    const newArray = oldArray.toSpliced(index, 1);
+    console.log(newArray);
+    setEventSongs(newArray);
+  };
+
+  const handleLive = () => {
+    navigate(`/live/${id}`);
   };
 
   return (
@@ -78,12 +98,25 @@ const EditEvent = ({ id }) => {
         />
         <Songs setSongs={setEventSongs} />
         <input
+          className="songs_input"
           name="songs"
           value={eventSongs}
           onChange={(e) => {
             setEventSongs(e.target.value);
           }}
         />
+        {eventSongs.length !== 0 && (
+          <div className="event_songs">
+            {eventSongs.map((id) => (
+              <SongCard
+                id={id}
+                fetchSong={fetchSong}
+                removeSong={removeSong}
+                eventSongs={eventSongs}
+              />
+            ))}
+          </div>
+        )}
         <br />
         <button onClick={handleSave} className="ctaBtn create_event_btn">
           Save
