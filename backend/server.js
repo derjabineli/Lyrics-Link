@@ -5,7 +5,12 @@ import dotenv from "dotenv";
 import cors from "cors";
 import router from "./routes/index.js";
 import pool from "./db/db.js";
-import { getPCCredentials, getSongs, getUser } from "./utils/planningcenter.js";
+import {
+  getPCCredentials,
+  getSong,
+  getSongs,
+  getUser,
+} from "./utils/planningcenter.js";
 
 dotenv.config();
 const app = express();
@@ -127,9 +132,7 @@ app.post("/api/events", async (req, res) => {
       text: "INSERT INTO events (id, event_type, event_date, songs, user_id) VALUES ($1, $2, $3, $4, $5) ON CONFLICT (id) DO UPDATE SET event_type = $2, event_date = $3, songs = $4",
       values: [event_id, name, date, songs, user_id],
     });
-    console.log(events);
-
-    res.redirect("http://localhost:3000");
+    res.redirect("http://localhost:3000/");
   } catch (error) {
     console.log(error);
   }
@@ -138,6 +141,12 @@ app.post("/api/events", async (req, res) => {
 app.get("/api/songs", async (req, res) => {
   const search = req.query.search;
   const data = await getSongs(req.session.access_token, search);
+  res.send(data);
+});
+
+app.get("/api/song", async (req, res) => {
+  const id = req.query.id;
+  const data = await getSong(req.session.access_token, id);
   res.send(data);
 });
 
