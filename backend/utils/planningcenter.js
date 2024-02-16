@@ -33,6 +33,26 @@ export async function getSongs(accessToken, title) {
   return songs;
 }
 
+export async function getSong(accessToken, id) {
+  let myHeaders = new Headers();
+  myHeaders.append("Authorization", `Bearer ${accessToken}`);
+
+  let requestOptions = {
+    method: "GET",
+    headers: myHeaders,
+    redirect: "follow",
+  };
+
+  const data = await fetch(
+    `https://api.planningcenteronline.com/services/v2/songs/${id}`,
+    requestOptions
+  );
+
+  const song = await data.json();
+
+  return song;
+}
+
 export async function getUser(accessToken) {
   let myHeaders = new Headers();
   myHeaders.append("Authorization", `Bearer ${accessToken}`);
