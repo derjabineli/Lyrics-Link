@@ -1,12 +1,17 @@
-import React, { useEffect, useState } from "react";
+import React, { useContext } from "react";
 import { useParams } from "react-router-dom";
 import EditEvent from "../components/EditEvent";
 import DashNavBar from "../components/DashNavBar";
+import { UserContext } from "../context/UserContext";
 
-const EventEdit = (props) => {
+const EventEdit = () => {
+  const { user, setUser } = useContext(UserContext);
   const { id } = useParams();
+  let userPhoto;
 
-  const userPhoto = props.user.attributes.photo_url;
+  if (user) {
+    userPhoto = user?.attributes?.photo_url;
+  }
 
   return (
     <div>
