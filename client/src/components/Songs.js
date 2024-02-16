@@ -13,7 +13,7 @@ function Songs(props) {
     const data = await res.json();
     setResults(data.data);
 
-    if (search.length != 0) {
+    if (search.length !== 0) {
       setSearched(true);
     } else {
       setSearched(false);
@@ -41,14 +41,17 @@ function Songs(props) {
         <div className="song_results">
           {searched ? (
             results.length > 0 ? (
-              results.map((song) => (
-                <Song
-                  id={song.id}
-                  title={song.attributes.title}
-                  author={song.attributes.author}
-                  setSongs={props.setSongs}
-                />
-              ))
+              results.map((song) => {
+                return (
+                  <Song
+                    id={song.id}
+                    title={song.attributes.title}
+                    author={song.attributes.author}
+                    link={song.links.self}
+                    setSongs={props.setSongs}
+                  />
+                );
+              })
             ) : (
               <h2>No Results</h2>
             )
