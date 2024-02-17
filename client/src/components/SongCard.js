@@ -1,26 +1,29 @@
 import React, { useEffect, useState } from "react";
 import "./SongCard.css";
 
-const SongCard = (props) => {
+const SongCard = ({ fetchSong, removeSong, eventSongs, songId }) => {
   const [songData, setSongData] = useState({});
+
   useEffect(() => {
-    props.fetchSong(props.id).then((data) => {
+    fetchSong(songId).then((data) => {
       setSongData(data);
     });
-  }, [props.eventSongs]);
+  }, [eventSongs]);
+
+  console.log(songData.data);
 
   return (
     <div className="songCard">
       <p
         className="songCard_close"
         onClick={() => {
-          props.removeSong(props.id);
+          removeSong(songId);
         }}
       >
         &#x2715;
       </p>
       <p className="songCard_title">{songData.title}</p>
-      <p className="songCard_id">#{songData.data.id}</p>
+      {/* <p className="songCard_id">#{songData.data.id}</p> */}
     </div>
   );
 };
