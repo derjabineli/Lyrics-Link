@@ -1,14 +1,15 @@
 import React, { useState } from "react";
 import "./NewEventModal.css";
 import Songs from "./Songs.js";
+import SongCard from "./SongCard.js";
 
 const NewEventModal = ({ open, onClose }) => {
   const [name, setName] = useState("");
   const [date, setDate] = useState("");
-  const [songs, setSongs] = useState([]);
+  const [eventSongs, setEventSongs] = useState([]);
 
   const handleCreate = async (e) => {
-    const data = { name: name, date: date, songs: songs };
+    const data = { name: name, date: date, songs: eventSongs };
 
     const response = await fetch("/api/events", {
       method: "POST",
@@ -24,6 +25,21 @@ const NewEventModal = ({ open, onClose }) => {
     // if (createdEvent.status === 201) {
     //   navigate("/");
     // }
+  };
+
+  const fetchSong = async (songId) => {
+    const res = await fetch(`/api/song/?id=${songId}`);
+    const data = await res.json();
+    return await data;
+  };
+
+  const removeSong = (songId) => {
+    const index = eventSongs.indexOf(songId);
+    console.log(index);
+    const oldArray = eventSongs;
+    const newArray = oldArray.toSpliced(index, 1);
+    console.log(newArray);
+    setEventSongs(newArray);
   };
 
   if (!open) return null;
@@ -59,8 +75,20 @@ const NewEventModal = ({ open, onClose }) => {
               setDate(e.target.value);
             }}
           />
-          <Songs setSongs={setSongs} />
-          <input name="songs" value={songs} />
+          <Songs setSongs={setEventSongs} />
+          <input className="songs_input" name="songs" value={eventSongs} />
+          {eventSongs.length != 0 && (
+            <div className="event_songs">
+              {eventSongs.map((songId) => (
+                <SongCard
+                  songId={songId}
+                  fetchSong={fetchSong}
+                  removeSong={removeSong}
+                  eventSongs={eventSongs}
+                />
+              ))}
+            </div>
+          )}
           <br />
           <button onClick={handleCreate} className="ctaBtn create_event_btn">
             Create
