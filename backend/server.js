@@ -150,7 +150,7 @@ app.get("/api/song", async (req, res) => {
   res.send(data);
 });
 
-app.post("/api/addSong", async (req, res) => {
+app.post("/api/song", async (req, res) => {
   const { id, title, admin, author, ccli, copyright, links } = req.body;
 
   console.log(req.body.id);
