@@ -27,6 +27,10 @@
   margin-top: 20px;
 }
 
+.songs_input {
+  display: none;
+}
+
 @media screen and (min-width: 480px) {
   .modal_container {
     width: 400px;
