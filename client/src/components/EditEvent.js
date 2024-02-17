@@ -29,7 +29,7 @@ const EditEvent = ({ id }) => {
   const fetchSong = async (songId) => {
     const res = await fetch(`/api/song/?id=${songId}`);
     const data = await res.json();
-    return data;
+    return await data;
   };
 
   const handleSave = async (e) => {
@@ -51,9 +51,8 @@ const EditEvent = ({ id }) => {
     }
   };
 
-  const removeSong = (itemId) => {
-    console.log(itemId);
-    const index = eventSongs.indexOf(itemId);
+  const removeSong = (songId) => {
+    const index = eventSongs.indexOf(songId);
     console.log(index);
     const oldArray = eventSongs;
     const newArray = oldArray.toSpliced(index, 1);
@@ -105,11 +104,11 @@ const EditEvent = ({ id }) => {
             setEventSongs(e.target.value);
           }}
         />
-        {eventSongs.length !== 0 && (
+        {eventSongs.length != 0 && (
           <div className="event_songs">
-            {eventSongs.map((id) => (
+            {eventSongs.map((songId) => (
               <SongCard
-                id={id}
+                songId={songId}
                 fetchSong={fetchSong}
                 removeSong={removeSong}
                 eventSongs={eventSongs}
