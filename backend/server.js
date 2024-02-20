@@ -17,7 +17,11 @@ const app = express();
 const port = process.env.PORT || 3001;
 
 // Takes information from a request body and attaches it to request object
-app.use(cors());
+const corsOptions = {
+  origin: "http://localhost:3000",
+  optionsSuccessStatus: 200, // some legacy browsers (IE11, various SmartTVs) choke on 204
+};
+app.use(cors(corsOptions));
 app.use(express.json());
 
 // Set Postgres Session
@@ -147,16 +151,35 @@ app.get("/api/songs", async (req, res) => {
 app.get("/api/song", async (req, res) => {
   const id = req.query.id;
   const data = await getSong(req.session.access_token, id);
-  res.send(data);
+  res.send(await data);
 });
 
 app.post("/api/song", async (req, res) => {
-  const { id, title, admin, author, ccli, copyright, links } = req.body;
+  const { id, name, lyrics, chord_chart, chord_chart_key } = req.body;
 
-  console.log(req.body.id);
-  // pool.query(
-  //   "INSERT INTO songs (id, title, admin, author, ccli, copyright, links) VALUES (5312796, '10,000 Reasons (Bless The Lord)', 'EMI Christian Music Publishing', 'EMI Christian Music Publishing', 6016351, '2011 Thankyou Music, Said And Done Music, sixsteps Music, and SHOUT! Publishing', 'https://api.planningcenteronline.com/services/v2/songs/5312796')"
-  // );
+  try {
+    const events = await pool.query({
+      text: "INSERT INTO event_songs (id, name, lyrics, chord_chart, chord_chart_key) VALUES ($1, $2, $3, $4, $5) ON CONFLICT (id) DO UPDATE SET name = $2, lyrics = $3, chord_chart = $4, chord_chart_key = $5",
+      values: [id, name, lyrics, chord_chart, chord_chart_key],
+    });
+    res.send(events);
+  } catch (error) {
+    console.log(error);
+  }
+});
+
+app.get("/api/getSong", async (req, res) => {
+  const id = req.query.id;
+
+  try {
+    const lyrics = await pool.query({
+      text: "SELECT lyrics FROM event_songs WHERE id = $1;",
+      values: [id],
+    });
+    res.send(lyrics);
+  } catch (error) {
+    console.log(error);
+  }
 });
 
 app.listen(port, () => {
