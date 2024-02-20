@@ -7,14 +7,23 @@
   padding: 30px 10px;
 }
 
+.songCard:hover {
+  background-color: hsl(0, 0%, 65%);
+}
+
 .songCard_close {
   position: absolute;
   left: 275px;
   top: 5px;
 }
 
+.songCard_close:hover {
+  cursor: pointer;
+}
+
 .songCard_title {
   font-size: 14px;
+  font-weight: bold;
 }
 
 .songCard_id {
