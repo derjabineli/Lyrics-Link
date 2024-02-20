@@ -10,8 +10,6 @@ const SongCard = ({ fetchSong, removeSong, eventSongs, songId }) => {
     });
   }, [eventSongs]);
 
-  console.log(songData.data);
-
   return (
     <div className="songCard">
       <p
