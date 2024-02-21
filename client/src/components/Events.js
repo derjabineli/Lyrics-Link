@@ -5,7 +5,6 @@ import NewEventModal from "./NewEventModal";
 
 function Events() {
   const [events, setEvents] = useState([]);
-  const [showModal, setShowModal] = useState(false);
 
   useEffect(() => {
     fetch("/api/events")
@@ -17,16 +16,12 @@ function Events() {
 
   return (
     <>
-      <NewEventModal open={showModal} onClose={() => setShowModal(false)} />
       <div className="container">
         <div className="events_header">
           <h1>Events</h1>
-          <button
-            className="ctaBtn events_button"
-            onClick={() => setShowModal(true)}
-          >
-            Add New Event
-          </button>
+          <a href="/new">
+            <button className="ctaBtn events_button">Add New Event</button>
+          </a>
         </div>
         <div className="events">
           {events.map((service) => (
