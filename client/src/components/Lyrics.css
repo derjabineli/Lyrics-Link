@@ -1,13 +1,14 @@
 .lyrics {
-  margin: 0 auto;
+  margin: 10px auto;
   max-width: 300px;
-  border-bottom: 1px solid black;
+  border-top: 1px solid black;
 }
 
 .lyric_name {
   color: hsl(232, 12%, 13%);
   font-size: 18px;
   margin: 20px 0px;
+  font-weight: bold;
 }
 
 @media screen and (max-width: 600px) {

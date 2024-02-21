@@ -1,6 +1,4 @@
 import React, { useEffect, useState } from "react";
-import ChordSheetJS from "chordsheetjs";
-import { useParams } from "react-router-dom";
 import "./Lyrics.css";
 
 const Lyrics = ({ id }) => {
@@ -19,8 +17,8 @@ const Lyrics = ({ id }) => {
   };
 
   return (
-    <div style={{ "white-space": "pre-line" }} className="song">
-      <h3 className="song_title">{songData.name}</h3>
+    <div style={{ "white-space": "pre-line" }} className="lyrics">
+      <h3 className="lyric_name">{songData.name}</h3>
       <div>{songData.lyrics}</div>
     </div>
   );
