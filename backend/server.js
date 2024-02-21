@@ -54,7 +54,7 @@ app.get("/login", async (req, res) => {
 
 app.get("/api/logout", (req, res) => {
   req.session.destroy();
-  res.redirect("http://localhost:3000/login");
+  res.redirect("http://localhost:3000/");
 });
 
 app.get("/callback", async (req, res) => {
@@ -99,13 +99,11 @@ app.get("/api/user", async (req, res) => {
 
 app.get("/api/event", async (req, res) => {
   const { id } = req.query;
-  console.log(id);
 
   const event = await pool.query({
     text: "SELECT * FROM events WHERE id = $1",
     values: [id],
   });
-  console.log(event.rows);
   res.send(event);
 });
 
@@ -174,7 +172,6 @@ app.get("/api/getSong", async (req, res) => {
       text: "SELECT lyrics, name FROM event_songs WHERE id = $1;",
       values: [id],
     });
-    console.log(lyrics.rows[0]);
     res.send(lyrics.rows[0]);
   } catch (error) {
     console.log(error);
