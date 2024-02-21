@@ -27,7 +27,7 @@ function Songs(props) {
   };
 
   return (
-    <div className="container">
+    <div className="">
       <div className="songs_header">
         <h1>Songs</h1>
       </div>
