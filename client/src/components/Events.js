@@ -1,7 +1,6 @@
 import React, { useEffect, useState } from "react";
 import "./Events.css";
 import Event from "./Event";
-import NewEventModal from "./NewEventModal";
 
 function Events() {
   const [events, setEvents] = useState([]);
