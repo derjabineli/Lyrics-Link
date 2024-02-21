@@ -126,8 +126,6 @@ app.post("/api/events", async (req, res) => {
   } else {
     event_id = req.body.id;
   }
-
-  console.log(req.body.id);
   const { name, date, songs } = req.body;
   const user_id = req.session.user_id;
 
@@ -173,10 +171,11 @@ app.get("/api/getSong", async (req, res) => {
 
   try {
     const lyrics = await pool.query({
-      text: "SELECT lyrics FROM event_songs WHERE id = $1;",
+      text: "SELECT lyrics, name FROM event_songs WHERE id = $1;",
       values: [id],
     });
-    res.send(lyrics);
+    console.log(lyrics.rows[0]);
+    res.send(lyrics.rows[0]);
   } catch (error) {
     console.log(error);
   }
