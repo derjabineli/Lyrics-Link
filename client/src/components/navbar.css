@@ -3,7 +3,7 @@ nav {
   background-color: var(--bg-dark-900);
   z-index: 2;
   position: relative;
-  padding: 2rem 8rem;
+  padding: 2rem 2rem;
   display: flex;
   justify-content: space-between;
   align-items: center;
@@ -18,6 +18,15 @@ nav a {
 nav ul {
   list-style: none;
   display: flex;
-  gap: 4rem;
+  gap: 12px;
   align-items: center;
+}
+
+@media screen and (min-width: 900px) {
+  nav {
+    padding: 2rem 8rem;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+  }
 }
