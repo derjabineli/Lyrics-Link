@@ -5,6 +5,7 @@ import { UserContext, UserContextProvider } from "./context/UserContext";
 import Login from "./routes/Login";
 import DashBoard from "./routes/DashBoard";
 import EventEdit from "./routes/EventEdit";
+import NewEvent from "./routes/NewEvent";
 import Live from "./routes/Live";
 
 function App() {
@@ -36,6 +37,7 @@ function App() {
           {loggedIn && (
             <Route path="/event/:id/update" element={<EventEdit />} />
           )}
+          {loggedIn && <Route path="/new" element={<NewEvent />} />}
           <Route path="/live/:id" element={<Live />} />
         </Routes>
       </Router>
