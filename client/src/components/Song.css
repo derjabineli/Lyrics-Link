@@ -16,8 +16,18 @@
 
 .song_title {
   font-weight: bold;
+  color: white;
 }
 
 .song_details {
   font-size: 12px;
+}
+
+@media screen and (max-width: 600px) {
+}
+
+@media screen and (min-width: 600px) {
+}
+
+@media screen and (min-width: 900px) {
 }

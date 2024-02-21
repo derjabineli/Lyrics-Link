@@ -1,20 +1,12 @@
 .songCard {
   border: 1px solid whitesmoke;
   border-radius: 10px;
-  padding: 14px;
   width: 100%;
   position: relative;
-  padding: 30px 10px;
 }
 
 .songCard:hover {
   background-color: hsl(0, 0%, 65%);
-}
-
-.songCard_close {
-  position: absolute;
-  left: 275px;
-  top: 5px;
 }
 
 .songCard_close:hover {
@@ -30,8 +22,39 @@
   font-size: 12px;
 }
 
-@media screen and (min-width: 1100px) {
+@media screen and (max-width: 600px) {
+  .songCard {
+    width: 200px;
+    padding: 20px 10px;
+  }
+  .songCard_close {
+    position: absolute;
+    left: 180px;
+    top: 4px;
+  }
+}
+
+@media screen and (min-width: 600px) {
+  .songCard {
+    width: 280px;
+    padding: 20px 10px;
+  }
+  .songCard_close {
+    position: absolute;
+    left: 255px;
+    top: 4px;
+  }
+}
+
+@media screen and (min-width: 900px) {
   .songCard {
     width: 300px;
+    padding: 30px 10px;
+  }
+
+  .songCard_close {
+    position: absolute;
+    left: 275px;
+    top: 5px;
   }
 }

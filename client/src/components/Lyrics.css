@@ -1,0 +1,20 @@
+.lyrics {
+  margin: 0 auto;
+  max-width: 300px;
+  border-bottom: 1px solid black;
+}
+
+.lyric_name {
+  color: hsl(232, 12%, 13%);
+  font-size: 18px;
+  margin: 20px 0px;
+}
+
+@media screen and (max-width: 600px) {
+}
+
+@media screen and (min-width: 600px) {
+}
+
+@media screen and (min-width: 900px) {
+}
