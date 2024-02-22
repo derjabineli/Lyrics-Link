@@ -3,7 +3,6 @@ import expressSession from "express-session";
 import postgresSession from "connect-pg-simple";
 import dotenv from "dotenv";
 import cors from "cors";
-import router from "./routes/index.js";
 import pool from "./db/db.js";
 import {
   getPCCredentials,
@@ -14,11 +13,11 @@ import {
 
 dotenv.config();
 const app = express();
-const port = process.env.PORT || 3001;
+const port = process.env.PORT;
 
 // Takes information from a request body and attaches it to request object
 const corsOptions = {
-  origin: "http://localhost:3000",
+  origin: "lyrics-link.vercel.app",
   optionsSuccessStatus: 200, // some legacy browsers (IE11, various SmartTVs) choke on 204
 };
 app.use(cors(corsOptions));
