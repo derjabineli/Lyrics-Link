@@ -13,7 +13,6 @@ import {
 
 dotenv.config();
 const app = express();
-const port = process.env.PORT;
 
 // Takes information from a request body and attaches it to request object
 const corsOptions = {
@@ -177,8 +176,8 @@ app.get("/api/getSong", async (req, res) => {
   }
 });
 
-app.listen(port, () => {
-  console.log(`server listening on port ${port}`);
+app.listen(5000, () => {
+  console.log("server listening on port 5000");
 });
 
 export default app;
