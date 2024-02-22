@@ -180,3 +180,5 @@ app.get("/api/getSong", async (req, res) => {
 app.listen(port, () => {
   console.log(`server listening on port ${port}`);
 });
+
+export default app;
