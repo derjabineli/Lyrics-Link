@@ -20,6 +20,7 @@ const app = express();
 const corsOptions = {
   origin: process.env.FRONTENDURL,
   optionsSuccessStatus: 200, // some legacy browsers (IE11, various SmartTVs) choke on 204
+  credentials: true,
 };
 app.use(cors(corsOptions));
 app.use(express.json());
@@ -35,6 +36,7 @@ app.use(
     }),
     secret: process.env.FOO_COOKIE_SECRET,
     resave: false,
+    saveUninitialized: true,
     cookie: { maxAge: 1000 * 60 * 60 * 24, httpOnly: false }, // 1 day
   })
 );
@@ -96,8 +98,8 @@ app.get("/api/user", async (req, res) => {
   try {
     const user = await getUser(req.session.access_token);
     res.send(user);
-  } catch {
-    res.send(null);
+  } catch (err) {
+    res.send(err);
   }
 });
 
@@ -112,13 +114,16 @@ app.get("/api/event", async (req, res) => {
 });
 
 app.get("/api/events", async (req, res) => {
+  console.log(req.session.user_id);
   try {
     const events = await pool.query({
       text: "SELECT * FROM events WHERE user_id = $1",
       values: [req.session.user_id],
     });
     res.send(events.rows);
-  } catch (error) {}
+  } catch (error) {
+    console.warn(error);
+  }
 });
 
 app.post("/api/events", async (req, res) => {
@@ -138,7 +143,7 @@ app.post("/api/events", async (req, res) => {
     });
     res.redirect(FRONTENDURL);
   } catch (error) {
-    console.log(error);
+    console.warn(error);
   }
 });
 
@@ -164,7 +169,7 @@ app.post("/api/song", async (req, res) => {
     });
     res.send(events);
   } catch (error) {
-    console.log(error);
+    console.warn(error);
   }
 });
 
@@ -178,7 +183,7 @@ app.get("/api/getSong", async (req, res) => {
     });
     res.send(lyrics.rows[0]);
   } catch (error) {
-    console.log(error);
+    console.warn(error);
   }
 });
 
