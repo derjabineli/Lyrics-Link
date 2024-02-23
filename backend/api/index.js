@@ -65,8 +65,6 @@ app.get("/api/callback", async (req, res) => {
     if (!code) {
       res.redirect("/api/login");
     }
-    const oldSessionId = req.sessionID;
-    console.log("Old Session" + oldSessionId);
 
     const accessData = await getPCCredentials(code);
     req.session.access_token = accessData.access_token;
@@ -80,9 +78,6 @@ app.get("/api/callback", async (req, res) => {
 
     req.session.user_id = user.data.id;
 
-    const midSession = req.sessionID;
-    console.log("Session before db query " + midSession);
-
     const queryStatus = await pool.query({
       text: "INSERT INTO users (id, name, photo_url) VALUES ($1, $2, $3) ON CONFLICT (id) DO UPDATE SET name = $2, photo_url = $3",
       values: [
@@ -91,9 +86,6 @@ app.get("/api/callback", async (req, res) => {
         user.data.attributes.photo_url,
       ],
     });
-
-    const newSessionId = req.sessionID;
-    console.log("New Session" + newSessionId);
 
     req.session.save(() => {
       res.redirect(FRONTENDURL);
@@ -105,6 +97,7 @@ app.get("/api/callback", async (req, res) => {
 
 app.get("/api/user", async (req, res) => {
   try {
+    console.log(req.session);
     const user = await getUser(req.session.access_token);
     res.send(user);
   } catch (err) {
