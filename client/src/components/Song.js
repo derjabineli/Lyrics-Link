@@ -5,7 +5,9 @@ function Song({ id, title, author, link, setSongs }) {
   useEffect(() => {});
 
   const addSongToDB = async (songId) => {
-    const res = await fetch(`/api/song/?id=${songId}`);
+    const res = await fetch(`/api/song/?id=${songId}`, {
+      credentials: "include",
+    });
     const data = await res.json();
     console.log(data);
 

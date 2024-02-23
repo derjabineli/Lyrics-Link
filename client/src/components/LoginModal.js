@@ -9,7 +9,7 @@ function loginModal() {
   return (
     <div className="loginModal">
       <h2>Log In with Planning Center</h2>
-      <a href={link} target="_blank" rel="noreferrer">
+      <a href={link}>
         <button className="loginButton ctaBtn">Login</button>
       </a>
     </div>

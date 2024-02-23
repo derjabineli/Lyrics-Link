@@ -3,6 +3,7 @@ import "./SongCard.css";
 
 const SongCard = ({ fetchSong, removeSong, eventSongs, songId }) => {
   const [songData, setSongData] = useState({});
+  console.log(songId);
 
   useEffect(() => {
     fetchSong(songId).then((data) => {

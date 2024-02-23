@@ -12,9 +12,12 @@ const EditEvent = ({ id }) => {
   const [eventSongs, setEventSongs] = useState([]);
 
   const getEvent = () => {
-    fetch(`/api/event/?id=${id}`)
+    fetch(process.env.REACT_APP_APIURL + `/api/event/?id=${id}`, {
+      credentials: "include",
+    })
       .then((response) => response.json())
       .then((data) => {
+        console.log(data);
         const event = data.rows[0];
         setName(event.event_type);
         setDate(event.event_date.substring(0, 10));
@@ -27,28 +30,36 @@ const EditEvent = ({ id }) => {
   }, []);
 
   const fetchSong = async (songId) => {
-    const res = await fetch(`/api/song/?id=${songId}`);
+    const res = await fetch(
+      process.env.REACT_APP_APIURL + `/api/song/?id=${songId}`,
+      {
+        credentials: "include",
+      }
+    );
     const data = await res.json();
     return await data;
   };
 
-  const handleSave = async (e) => {
+  const handleSave = (e) => {
     e.preventDefault();
 
     const data = { id: id, name: name, date: date, songs: eventSongs };
 
-    const response = await fetch(process.env.REACT_APP_APIURL + "/api/events", {
+    fetch(process.env.REACT_APP_APIURL + "/api/events", {
       method: "POST",
       headers: {
         "Content-Type": "application/json",
       },
       credentials: "same-origin",
       body: JSON.stringify(data),
+    }).then((res) => {
+      console.log(res);
     });
 
-    if (response.status === 200) {
-      navigate("/");
-    }
+    // console.log(response);
+    // if (response.status === 200) {
+    //   navigate("/");
+    // }
   };
 
   const removeSong = (songId) => {

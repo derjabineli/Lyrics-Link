@@ -1,7 +1,7 @@
 import React, { useState, useEffect, useContext } from "react";
 import "./App.css";
 import { BrowserRouter as Router, Route, Routes } from "react-router-dom";
-import { UserContext, UserContextProvider } from "./context/UserContext";
+import { UserContext } from "./context/UserContext";
 import Login from "./routes/Login";
 import DashBoard from "./routes/DashBoard";
 import EventEdit from "./routes/EventEdit";
@@ -13,7 +13,9 @@ function App() {
   const { user, setUser } = useContext(UserContext);
 
   useEffect(() => {
-    fetch(process.env.REACT_APP_APIURL + "/api/user")
+    fetch(process.env.REACT_APP_APIURL + "/api/user", {
+      credentials: "include",
+    })
       .then((response) => response.json())
       .then((data) => {
         if (data.data != null) {
@@ -25,8 +27,6 @@ function App() {
         console.error(err);
       });
   }, []);
-
-  console.log(loggedIn);
 
   return (
     <div className="App">

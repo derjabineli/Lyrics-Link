@@ -6,13 +6,15 @@ function Events() {
   const [events, setEvents] = useState([]);
 
   useEffect(() => {
-    fetch(process.env.REACT_APP_APIURL + "/api/events")
+    fetch(process.env.REACT_APP_APIURL + "/api/events", {
+      credentials: "include",
+    })
       .then((res) => res.json())
       .then((data) => {
+        console.log(data);
         setEvents((oldArray) => [...data]);
       });
   }, []);
-
   return (
     <>
       <div className="container">
