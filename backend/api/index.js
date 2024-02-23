@@ -17,12 +17,12 @@ const FRONTENDURL = process.env.FRONTENDURL;
 const app = express();
 
 // Takes information from a request body and attaches it to request object
-const corsOptions = {
-  origin: process.env.FRONTENDURL,
-  optionsSuccessStatus: 200, // some legacy browsers (IE11, various SmartTVs) choke on 204
-  credentials: true,
-};
-app.use(cors(corsOptions));
+// const corsOptions = {
+//   origin: process.env.FRONTENDURL,
+//   optionsSuccessStatus: 200, // some legacy browsers (IE11, various SmartTVs) choke on 204
+//   credentials: true,
+// };
+// app.use(cors({ ...corsOptions }));
 app.use(express.json());
 
 // Set Postgres Session
