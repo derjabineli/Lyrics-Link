@@ -43,6 +43,7 @@ app.use(
 
 app.get("/api", async (req, res) => {
   if (req.session.access_token) {
+    console.log(req.session);
     res.send("logged in");
   } else res.send("not logged in");
 });
