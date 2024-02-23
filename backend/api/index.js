@@ -18,13 +18,6 @@ const FRONTENDURL = process.env.FRONTENDURL;
 const production = process.env.NODE_ENV === "production";
 const app = express();
 
-// Takes information from a request body and attaches it to request object
-const corsOptions = {
-  origin: FRONTENDURL,
-  optionsSuccessStatus: 200, // some legacy browsers (IE11, various SmartTVs) choke on 204
-  credentials: true,
-};
-app.use(cors(corsOptions));
 app.use(express.json());
 
 // Set Postgres Session
@@ -34,6 +27,7 @@ const cookieSettings = {
   httpOnly: false,
   sameSite: production ? "none" : undefined,
   maxAge: 1000 * 60 * 60 * 24, // 1 day
+  path: production ? "/api" : undefined,
 };
 app.use(
   expressSession({
@@ -48,6 +42,14 @@ app.use(
     cookie: cookieSettings,
   })
 );
+
+// Takes information from a request body and attaches it to request object
+const corsOptions = {
+  origin: FRONTENDURL,
+  optionsSuccessStatus: 200, // some legacy browsers (IE11, various SmartTVs) choke on 204
+  credentials: true,
+};
+app.use(cors(corsOptions));
 
 app.get("/api", async (req, res) => {
   console.log(req.session);
