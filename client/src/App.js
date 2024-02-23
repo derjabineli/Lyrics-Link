@@ -19,6 +19,7 @@ function App() {
     })
       .then((response) => response.json())
       .then((data) => {
+        console.log(data);
         if (data.data != null) {
           setLoggedIn(true);
           setUser(data.data);
