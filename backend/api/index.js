@@ -37,14 +37,14 @@ app.use(
   })
 );
 
-app.get("/", async (req, res) => {
+app.get("/api", async (req, res) => {
   if (req.session.access_token) {
     res.send("logged in");
   } else res.send("not logged in");
 });
 
 // Log in
-app.get("/login", async (req, res) => {
+app.get("/api/login", async (req, res) => {
   res.redirect(
     `https://api.planningcenteronline.com/oauth/authorize?client_id=${process.env.PCCLIENTID}&redirect_uri=${process.env.REDIRECTURI}&response_type=code&scope=services people`
   );
@@ -55,7 +55,7 @@ app.get("/api/logout", (req, res) => {
   res.redirect("http://localhost:3000/");
 });
 
-app.get("/callback", async (req, res) => {
+app.get("/api/callback", async (req, res) => {
   const code = req.query.code;
   if (!code) {
     res.redirect("/login");
@@ -176,8 +176,8 @@ app.get("/api/getSong", async (req, res) => {
   }
 });
 
-app.listen(5000, () => {
-  console.log("server listening on port 5000");
+app.listen(3001, () => {
+  console.log("server listening on port 3001");
 });
 
 module.exports = app;
