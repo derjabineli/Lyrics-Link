@@ -20,13 +20,6 @@ app.use(express.json());
 
 // Set Postgres Session
 const pgSession = postgresSession(expressSession);
-const cookieSettings = {
-  secure: true,
-  httpOnly: false,
-  //   sameSite: "None",
-  maxAge: 1000 * 60 * 60 * 24, // 1 day
-  path: "/api",
-};
 app.use(
   expressSession({
     store: new pgSession({
@@ -37,7 +30,13 @@ app.use(
     secret: process.env.FOO_COOKIE_SECRET,
     resave: false,
     saveUninitialized: false,
-    cookie: cookieSettings,
+    cookie: {
+      secure: true,
+      httpOnly: false,
+      sameSite: "lax",
+      maxAge: 1000 * 60 * 60 * 24, // 1 day
+      path: "/api",
+    },
   })
 );
 
