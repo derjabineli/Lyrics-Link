@@ -74,7 +74,7 @@ app.get("/api/callback", async (req, res) => {
     req.session.scope = accessData.scope;
     req.session.created_at = accessData.created_at;
 
-    const user = await getUser(req.session.access_token);
+    const user = await getUser(accessData.access_token);
 
     req.session.user_id = user.data.id;
 
