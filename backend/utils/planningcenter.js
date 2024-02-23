@@ -70,6 +70,7 @@ async function getUser(accessToken) {
       headers: {
         Authorization: `Bearer ${accessToken}`,
       },
+      redirect: "follow",
     };
 
     console.log("Access Token:");
