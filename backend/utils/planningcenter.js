@@ -75,9 +75,9 @@ async function getUser(accessToken) {
   const data = await fetch(
     "https://api.planningcenteronline.com/services/v2/me",
     requestOptions
-  ).then((e) => e.json());
-
-  return data;
+  );
+  const user = await data.json();
+  return user;
 }
 
 module.exports = {
