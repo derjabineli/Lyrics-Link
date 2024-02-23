@@ -13,7 +13,7 @@ function App() {
   const { user, setUser } = useContext(UserContext);
 
   useEffect(() => {
-    fetch("/api/user")
+    fetch(process.env.REACT_APP_APIURL + "/api/user")
       .then((response) => response.json())
       .then((data) => {
         if (data.data != null) {

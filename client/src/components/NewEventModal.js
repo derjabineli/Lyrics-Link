@@ -11,7 +11,7 @@ const NewEventModal = ({ open, onClose }) => {
   const handleCreate = async (e) => {
     const data = { name: name, date: date, songs: eventSongs };
 
-    const response = await fetch("/api/events", {
+    const response = await fetch(process.env.REACT_APP_APIURL + "/api/events", {
       method: "POST",
       headers: {
         "Content-Type": "application/json",

@@ -18,7 +18,7 @@ const app = express();
 
 // Takes information from a request body and attaches it to request object
 const corsOptions = {
-  origin: "lyrics-link.vercel.app",
+  origin: process.env.BASEURL.replace(/https?:\/\//gi, ""),
   optionsSuccessStatus: 200, // some legacy browsers (IE11, various SmartTVs) choke on 204
 };
 app.use(cors(corsOptions));

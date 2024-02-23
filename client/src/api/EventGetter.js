@@ -1,5 +1,5 @@
 import axios from "axios";
 
 export default axios.create({
-  baseURL: "http://localhost:3005/api/events",
+  baseURL: `${process.env.REACT_APP_APIURL}/api/events`,
 });

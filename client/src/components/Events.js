@@ -6,7 +6,7 @@ function Events() {
   const [events, setEvents] = useState([]);
 
   useEffect(() => {
-    fetch("/api/events")
+    fetch(process.env.REACT_APP_APIURL + "/api/events")
       .then((res) => res.json())
       .then((data) => {
         setEvents((oldArray) => [...data]);

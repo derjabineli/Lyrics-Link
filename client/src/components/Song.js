@@ -19,14 +19,17 @@ function Song({ id, title, author, link, setSongs }) {
 
     console.log(postData);
 
-    const postRequest = await fetch("/api/song", {
-      method: "POST",
-      headers: {
-        "Content-Type": "application/json",
-      },
-      credentials: "same-origin",
-      body: JSON.stringify(postData),
-    });
+    const postRequest = await fetch(
+      process.env.REACT_APP_APIURL + "/api/song",
+      {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        credentials: "same-origin",
+        body: JSON.stringify(postData),
+      }
+    );
 
     console.log(postRequest);
   };

@@ -8,7 +8,7 @@ function DashNavBar(props) {
       <a href="/">LyricsLink.</a>
       <ul>
         <li>
-          <a href="http://localhost:3005/api/logout">Logout</a>
+          <a href={`${process.env.REACT_APP_APIURL}/api/logout`}>Logout</a>
         </li>
         <li>
           {" "}
