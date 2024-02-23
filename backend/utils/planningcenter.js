@@ -1,3 +1,5 @@
+const fetch = require("isomorphic-fetch");
+
 async function getPCCredentials(code) {
   let requestOptions = {
     method: "POST",
