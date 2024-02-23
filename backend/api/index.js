@@ -36,7 +36,7 @@ app.use(
     }),
     secret: process.env.FOO_COOKIE_SECRET,
     resave: false,
-    saveUninitialized: true,
+    saveUninitialized: false,
     cookie: { maxAge: 1000 * 60 * 60 * 24, httpOnly: false }, // 1 day
   })
 );
@@ -65,6 +65,9 @@ app.get("/api/callback", async (req, res) => {
     if (!code) {
       res.redirect("/api/login");
     }
+    const oldSessionId = req.sessionID;
+    console.log("Old Session" + oldSessionId);
+
     const accessData = await getPCCredentials(code);
     req.session.access_token = accessData.access_token;
     req.session.token_type = accessData.token_type;
@@ -85,6 +88,9 @@ app.get("/api/callback", async (req, res) => {
         user.data.attributes.photo_url,
       ],
     });
+
+    const newSessionId = req.sessionID;
+    console.log("New Session" + newSessionId);
 
     req.session.save(() => {
       res.redirect(FRONTENDURL);
