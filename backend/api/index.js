@@ -24,7 +24,7 @@ const corsOptions = {
   optionsSuccessStatus: 200, // some legacy browsers (IE11, various SmartTVs) choke on 204
   credentials: true,
 };
-app.use(cors({ ...corsOptions }));
+app.use(cors(corsOptions));
 app.use(express.json());
 
 // Set Postgres Session
@@ -40,9 +40,8 @@ app.use(
     resave: false,
     saveUninitialized: false,
     cookie: {
-      domain: FRONTENDURL.replace(/http?s:\/\//gi, ""),
       secure: production,
-      httpOnly: production,
+      httpOnly: false,
       sameSite: production ? "none" : undefined,
       maxAge: 1000 * 60 * 60 * 24, // 1 day
     },
