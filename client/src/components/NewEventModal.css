@@ -1,0 +1,52 @@
+.overlay {
+  position: fixed;
+  height: 100%;
+  width: 100%;
+  background-color: rgba(0, 0, 0, 0.8);
+  top: 0;
+  z-index: 2;
+}
+
+.modal_container {
+  margin: 40px auto;
+  width: 400px;
+  background-color: black;
+  box-shadow: 0px 0px 10px 0px #f1f1f185;
+  border-radius: 10px;
+}
+
+.event_name {
+  background-color: transparent;
+  border: 1px solid rgba(255, 255, 255, 0.232);
+  border-radius: 10px;
+  padding: 4px 16px;
+  color: white;
+}
+
+.create_event_btn {
+  margin-top: 20px;
+}
+
+.songs_input {
+  display: none;
+}
+
+@media screen and (max-width: 600px) {
+  .modal_container {
+    width: 280px;
+  }
+}
+
+@media screen and (min-width: 600px) {
+  .modal_container {
+    width: 580px;
+    padding: 20px;
+  }
+}
+
+@media screen and (min-width: 900px) {
+  .modal_container {
+    width: 880px;
+    padding: 20px;
+  }
+}
