@@ -100,7 +100,7 @@ app.get("/api/callback", async (req, res) => {
 
 app.get("/api/user", async (req, res) => {
   try {
-    console.log(req.headers.cookie);
+    console.log(req.session);
     const user = await getUser(req.session.access_token);
     res.send(user);
   } catch (err) {
