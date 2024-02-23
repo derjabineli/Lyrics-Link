@@ -5,11 +5,13 @@ function Song({ id, title, author, link, setSongs }) {
   useEffect(() => {});
 
   const addSongToDB = async (songId) => {
-    const res = await fetch(`/api/song/?id=${songId}`, {
-      credentials: "include",
-    });
+    const res = await fetch(
+      process.env.REACT_APP_APIURL + `/api/song/?id=${songId}`,
+      {
+        credentials: "include",
+      }
+    );
     const data = await res.json();
-    console.log(data);
 
     const postData = {
       id: songId,
@@ -18,8 +20,6 @@ function Song({ id, title, author, link, setSongs }) {
       chord_chart: data.data.attributes.chord_chart,
       chord_chart_key: data.data.attributes.chord_chart_key,
     };
-
-    console.log(postData);
 
     const postRequest = await fetch(
       process.env.REACT_APP_APIURL + "/api/song",
@@ -32,8 +32,6 @@ function Song({ id, title, author, link, setSongs }) {
         body: JSON.stringify(postData),
       }
     );
-
-    console.log(postRequest);
   };
 
   const addSongToEvent = () => {

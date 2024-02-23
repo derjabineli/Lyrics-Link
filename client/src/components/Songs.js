@@ -9,7 +9,10 @@ function Songs(props) {
   let searchTimer;
 
   const fetchSongs = async (search) => {
-    const res = await fetch(`/api/songs?search=${search}`);
+    const res = await fetch(
+      process.env.REACT_APP_APIURL + `/api/songs?search=${search}`,
+      { credentials: "include" }
+    );
     const data = await res.json();
     setResults(data.data);
 
@@ -44,6 +47,7 @@ function Songs(props) {
               results.map((song) => {
                 return (
                   <Song
+                    key={song.id}
                     id={song.id}
                     title={song.attributes.title}
                     author={song.attributes.author}

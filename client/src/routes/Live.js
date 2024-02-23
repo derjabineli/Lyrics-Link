@@ -10,7 +10,9 @@ const Live = () => {
 
   useEffect(() => {
     const getEvent = () => {
-      fetch(`/api/event/?id=${event_id}`)
+      fetch(process.env.REACT_APP_APIURL + `/api/event/?id=${event_id}`, {
+        credentials: "include",
+      })
         .then((response) => response.json())
         .then((data) => {
           console.log(data.rows[0].songs);
