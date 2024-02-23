@@ -42,7 +42,7 @@ app.use(
     cookie: {
       secure: production,
       httpOnly: production,
-      sameSite: "none",
+      sameSite: production ? "none" : undefined,
       maxAge: 1000 * 60 * 60 * 24, // 1 day
     },
   })
@@ -83,6 +83,7 @@ app.get("/api/callback", async (req, res) => {
     req.session.refresh_token = accessData.refresh_token;
     req.session.scope = accessData.scope;
     req.session.created_at = accessData.created_at;
+    res.setHeader("Cache-Control", "s-max-age=1, stale-while-revalidate");
 
     const user = await getUser(accessData.access_token);
 
@@ -123,6 +124,7 @@ app.get("/api/event", async (req, res) => {
     text: "SELECT * FROM events WHERE id = $1",
     values: [id],
   });
+  res.setHeader("Cache-Control", "s-max-age=1, stale-while-revalidate");
   res.send(event);
 });
 
@@ -133,6 +135,8 @@ app.get("/api/events", async (req, res) => {
       text: "SELECT * FROM events WHERE user_id = $1",
       values: [req.session.user_id],
     });
+    res.setHeader("Cache-Control", "s-max-age=1, stale-while-revalidate");
+
     res.send(events.rows);
   } catch (error) {
     console.warn(error);
@@ -154,6 +158,8 @@ app.post("/api/events", async (req, res) => {
       text: "INSERT INTO events (id, event_type, event_date, songs, user_id) VALUES ($1, $2, $3, $4, $5) ON CONFLICT (id) DO UPDATE SET event_type = $2, event_date = $3, songs = $4",
       values: [event_id, name, date, songs, user_id],
     });
+    res.setHeader("Cache-Control", "s-max-age=1, stale-while-revalidate");
+
     res.redirect(FRONTENDURL);
   } catch (error) {
     console.warn(error);
@@ -163,12 +169,16 @@ app.post("/api/events", async (req, res) => {
 app.get("/api/songs", async (req, res) => {
   const search = req.query.search;
   const data = await getSongs(req.session.access_token, search);
+  res.setHeader("Cache-Control", "s-max-age=1, stale-while-revalidate");
+
   res.send(data);
 });
 
 app.get("/api/song", async (req, res) => {
   const id = req.query.id;
   const data = await getSong(req.session.access_token, id);
+  res.setHeader("Cache-Control", "s-max-age=1, stale-while-revalidate");
+
   res.send(await data);
 });
 
@@ -180,6 +190,8 @@ app.post("/api/song", async (req, res) => {
       text: "INSERT INTO event_songs (id, name, lyrics, chord_chart, chord_chart_key) VALUES ($1, $2, $3, $4, $5) ON CONFLICT (id) DO UPDATE SET name = $2, lyrics = $3, chord_chart = $4, chord_chart_key = $5",
       values: [id, name, lyrics, chord_chart, chord_chart_key],
     });
+    res.setHeader("Cache-Control", "s-max-age=1, stale-while-revalidate");
+
     res.send(events);
   } catch (error) {
     console.warn(error);
@@ -194,6 +206,8 @@ app.get("/api/getSong", async (req, res) => {
       text: "SELECT lyrics, name FROM event_songs WHERE id = $1;",
       values: [id],
     });
+    res.setHeader("Cache-Control", "s-max-age=1, stale-while-revalidate");
+
     res.send(lyrics.rows[0]);
   } catch (error) {
     console.warn(error);
