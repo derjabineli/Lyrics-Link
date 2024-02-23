@@ -65,19 +65,22 @@ async function getSong(accessToken, id) {
 }
 
 async function getUser(accessToken) {
-  console.log(accessToken);
-  let requestOptions = {
-    headers: {
-      Authorization: `Bearer ${accessToken}`,
-    },
-  };
+  try {
+    const requestOptions = {
+      headers: {
+        Authorization: `Bearer ${accessToken}`,
+      },
+    };
 
-  const data = await fetch(
-    "https://api.planningcenteronline.com/services/v2/me",
-    requestOptions
-  );
-  const user = await data.json();
-  return user;
+    const data = await fetch(
+      "https://api.planningcenteronline.com/services/v2/me",
+      requestOptions
+    );
+    const user = await data.json();
+    return user;
+  } catch (err) {
+    console.warn(err);
+  }
 }
 
 module.exports = {
