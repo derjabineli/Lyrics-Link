@@ -37,11 +37,7 @@ app.use(
     secret: process.env.FOO_COOKIE_SECRET,
     resave: false,
     saveUninitialized: true,
-    cookie: {
-      maxAge: 1000 * 60 * 60 * 24,
-      secure: true,
-      sameSite: "None",
-    }, // 1 day
+    cookie: { maxAge: 1000 * 60 * 60 * 24, httpOnly: false }, // 1 day
   })
 );
 
