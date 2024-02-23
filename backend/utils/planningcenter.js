@@ -81,6 +81,9 @@ async function getUser(accessToken) {
       requestOptions
     );
 
+    console.log("data: ");
+    console.log(data);
+
     if (!data.ok) {
       // Handle non-JSON response (e.g., error page)
       const errorText = await data.text();
