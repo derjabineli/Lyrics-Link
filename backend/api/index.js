@@ -14,6 +14,8 @@ const {
 dotenv.config();
 
 const FRONTENDURL = process.env.FRONTENDURL;
+
+const production = process.env.NODE_ENV === "production";
 const app = express();
 
 // Takes information from a request body and attaches it to request object
@@ -38,10 +40,10 @@ app.use(
     resave: false,
     saveUninitialized: false,
     cookie: {
+      secure: production,
+      httpOnly: production,
       sameSite: "none",
-      secure: true,
       maxAge: 1000 * 60 * 60 * 24, // 1 day
-      httpOnly: false,
     },
   })
 );
