@@ -72,6 +72,9 @@ async function getUser(accessToken) {
       },
     };
 
+    console.log("Access Token:");
+    console.log(accessToken);
+
     const data = await fetch(
       "https://api.planningcenteronline.com/services/v2/me",
       requestOptions
