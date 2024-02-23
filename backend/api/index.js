@@ -1,3 +1,3 @@
 const app = require("../server");
 
-export default app;
+module.exports = app;

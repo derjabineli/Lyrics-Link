@@ -1,4 +1,4 @@
-export async function getPCCredentials(code) {
+async function getPCCredentials(code) {
   let requestOptions = {
     method: "POST",
     redirect: "follow",
@@ -11,7 +11,7 @@ export async function getPCCredentials(code) {
   return accessData;
 }
 
-export async function getSongs(accessToken, title) {
+async function getSongs(accessToken, title) {
   const query = title.split(" ").join("+");
 
   let myHeaders = new Headers();
@@ -33,7 +33,7 @@ export async function getSongs(accessToken, title) {
   return songs;
 }
 
-export async function getSong(accessToken, id) {
+async function getSong(accessToken, id) {
   let myHeaders = new Headers();
   myHeaders.append("Authorization", `Bearer ${accessToken}`);
 
@@ -64,7 +64,7 @@ export async function getSong(accessToken, id) {
   return songObj;
 }
 
-export async function getUser(accessToken) {
+async function getUser(accessToken) {
   let myHeaders = new Headers();
   myHeaders.append("Authorization", `Bearer ${accessToken}`);
 
@@ -83,3 +83,10 @@ export async function getUser(accessToken) {
 
   return user;
 }
+
+module.exports = {
+  getPCCredentials,
+  getSongs,
+  getSong,
+  getUser,
+};
