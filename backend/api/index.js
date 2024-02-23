@@ -25,7 +25,7 @@ const pgSession = postgresSession(expressSession);
 const cookieSettings = {
   secure: production,
   httpOnly: false,
-  //   sameSite: production ? "none" : undefined,
+  sameSite: production ? "None" : undefined,
   maxAge: 1000 * 60 * 60 * 24, // 1 day
   path: production ? "/api" : undefined,
 };
