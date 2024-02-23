@@ -18,8 +18,8 @@ const app = express();
 
 // Takes information from a request body and attaches it to request object
 const corsOptions = {
-  //   origin: process.env.FRONTENDURL,
-  origin: "*",
+  origin: process.env.FRONTENDURL,
+  //   origin: "*",
   optionsSuccessStatus: 200, // some legacy browsers (IE11, various SmartTVs) choke on 204
   credentials: true,
 };
