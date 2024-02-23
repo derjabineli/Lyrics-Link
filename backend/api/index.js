@@ -18,8 +18,7 @@ const app = express();
 
 // Takes information from a request body and attaches it to request object
 const corsOptions = {
-  origin: process.env.FRONTENDURL,
-  //   origin: "*",
+  origin: FRONTENDURL,
   optionsSuccessStatus: 200, // some legacy browsers (IE11, various SmartTVs) choke on 204
   credentials: true,
 };
@@ -37,8 +36,13 @@ app.use(
     }),
     secret: process.env.FOO_COOKIE_SECRET,
     resave: false,
+
     saveUninitialized: false,
-    cookie: { maxAge: 1000 * 60 * 60 * 24, httpOnly: false }, // 1 day
+    cookie: {
+      sameSite: "none",
+      maxAge: 1000 * 60 * 60 * 24,
+      httpOnly: false,
+    }, // 1 day
   })
 );
 
