@@ -16,12 +16,11 @@ async function getPCCredentials(code) {
 async function getSongs(accessToken, title) {
   const query = title.split(" ").join("+");
 
-  let myHeaders = new Headers();
-  myHeaders.append("Authorization", `Bearer ${accessToken}`);
-
   let requestOptions = {
     method: "GET",
-    headers: myHeaders,
+    headers: {
+      Authorization: `Bearer ${accessToken}`,
+    },
     redirect: "follow",
   };
 
@@ -36,12 +35,11 @@ async function getSongs(accessToken, title) {
 }
 
 async function getSong(accessToken, id) {
-  let myHeaders = new Headers();
-  myHeaders.append("Authorization", `Bearer ${accessToken}`);
-
   let requestOptions = {
     method: "GET",
-    headers: myHeaders,
+    headers: {
+      Authorization: `Bearer ${accessToken}`,
+    },
     redirect: "follow",
   };
 
@@ -67,23 +65,19 @@ async function getSong(accessToken, id) {
 }
 
 async function getUser(accessToken) {
-  let myHeaders = new Headers();
-  myHeaders.append("Authorization", `Bearer ${accessToken}`);
-
+  console.log(accessToken);
   let requestOptions = {
-    method: "GET",
-    headers: myHeaders,
-    redirect: "follow",
+    headers: {
+      Authorization: `Bearer ${accessToken}`,
+    },
   };
 
   const data = await fetch(
     "https://api.planningcenteronline.com/services/v2/me",
     requestOptions
-  );
+  ).then((e) => e.json());
 
-  const user = await data.json();
-
-  return user;
+  return data;
 }
 
 module.exports = {

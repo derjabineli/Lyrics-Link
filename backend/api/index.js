@@ -58,34 +58,39 @@ app.get("/api/logout", (req, res) => {
 });
 
 app.get("/api/callback", async (req, res) => {
-  const code = req.query.code;
-  if (!code) {
-    res.redirect("/api/login");
+  try {
+    const code = req.query.code;
+    if (!code) {
+      res.redirect("/api/login");
+    }
+    const accessData = await getPCCredentials(code);
+    console.log(accessData);
+    req.session.access_token = accessData.access_token;
+    req.session.token_type = accessData.token_type;
+    req.session.expires_in = accessData.expires_in;
+    req.session.refresh_token = accessData.refresh_token;
+    req.session.scope = accessData.scope;
+    req.session.created_at = accessData.created_at;
+
+    const user = await getUser(req.session.access_token);
+
+    req.session.user_id = user.data.id;
+
+    const queryStatus = await pool.query({
+      text: "INSERT INTO users (id, name, photo_url) VALUES ($1, $2, $3) ON CONFLICT (id) DO UPDATE SET name = $2, photo_url = $3",
+      values: [
+        user.data.id,
+        user.data.attributes.full_name,
+        user.data.attributes.photo_url,
+      ],
+    });
+
+    req.session.save(() => {
+      res.redirect(FRONTENDURL);
+    });
+  } catch (error) {
+    console.warn(error);
   }
-  const accessData = await getPCCredentials(code);
-  req.session.access_token = accessData.access_token;
-  req.session.token_type = accessData.token_type;
-  req.session.expires_in = accessData.expires_in;
-  req.session.refresh_token = accessData.refresh_token;
-  req.session.scope = accessData.scope;
-  req.session.created_at = accessData.created_at;
-
-  const user = await getUser(req.session.access_token);
-
-  req.session.user_id = user.data.id;
-
-  const queryStatus = await pool.query({
-    text: "INSERT INTO users (id, name, photo_url) VALUES ($1, $2, $3) ON CONFLICT (id) DO UPDATE SET name = $2, photo_url = $3",
-    values: [
-      user.data.id,
-      user.data.attributes.full_name,
-      user.data.attributes.photo_url,
-    ],
-  });
-
-  req.session.save(() => {
-    res.redirect("http://localhost:3000");
-  });
 });
 
 app.get("/api/user", async (req, res) => {
@@ -178,8 +183,8 @@ app.get("/api/getSong", async (req, res) => {
   }
 });
 
-app.listen(3001, () => {
-  console.log("server listening on port 3001");
+app.listen(3005, () => {
+  console.log("server listening on port 3005");
 });
 
 module.exports = app;
