@@ -80,6 +80,9 @@ app.get("/api/callback", async (req, res) => {
 
     req.session.user_id = user.data.id;
 
+    const midSession = req.sessionID;
+    console.log("Session before db query " + midSession);
+
     const queryStatus = await pool.query({
       text: "INSERT INTO users (id, name, photo_url) VALUES ($1, $2, $3) ON CONFLICT (id) DO UPDATE SET name = $2, photo_url = $3",
       values: [
