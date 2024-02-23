@@ -40,6 +40,7 @@ app.use(
     resave: false,
     saveUninitialized: false,
     cookie: {
+      domain: FRONTENDURL.replace(/http?s:\/\//gi, ""),
       secure: production,
       httpOnly: production,
       sameSite: production ? "none" : undefined,
