@@ -80,7 +80,7 @@ async function getUser(accessToken) {
     if (!data.ok) {
       // Handle non-JSON response (e.g., error page)
       const errorText = await data.text();
-      console.error(`API error: ${response.status} - ${errorText}`);
+      console.error(`API error: ${data.status} - ${errorText}`);
       // Handle the error as needed
       return;
     }
