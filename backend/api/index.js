@@ -90,6 +90,7 @@ app.get("/api/callback", async (req, res) => {
       ],
     });
 
+    console.log(req.session);
     req.session.save(() => {
       res.redirect(FRONTENDURL);
     });
