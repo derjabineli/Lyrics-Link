@@ -76,6 +76,15 @@ async function getUser(accessToken) {
       "https://api.planningcenteronline.com/services/v2/me",
       requestOptions
     );
+
+    if (!data.ok) {
+      // Handle non-JSON response (e.g., error page)
+      const errorText = await data.text();
+      console.error(`API error: ${response.status} - ${errorText}`);
+      // Handle the error as needed
+      return;
+    }
+
     const user = await data.json();
     return user;
   } catch (err) {
