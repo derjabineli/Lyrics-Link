@@ -28,6 +28,7 @@ function Events() {
           {events.map((service) => (
             <a href={`event/${service.id}/update`} className="events_link">
               <Event
+                key={service.id}
                 id={service.id}
                 name={service.event_type}
                 date={service.event_date.substring(0, 10)}
