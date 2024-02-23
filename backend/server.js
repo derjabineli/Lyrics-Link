@@ -1,15 +1,15 @@
-import express from "express";
-import expressSession from "express-session";
-import postgresSession from "connect-pg-simple";
-import dotenv from "dotenv";
-import cors from "cors";
-import pool from "./db/db.js";
-import {
+const express = require("express");
+const expressSession = require("express-session");
+const postgresSession = require("connect-pg-simple");
+const dotenv = require("dotenv");
+const cors = require("cors");
+const pool = require("./db/db.js");
+const {
   getPCCredentials,
   getSong,
   getSongs,
   getUser,
-} from "./utils/planningcenter.js";
+} = require("./utils/planningcenter.js");
 
 dotenv.config();
 const app = express();
