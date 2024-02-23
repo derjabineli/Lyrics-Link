@@ -29,6 +29,12 @@ app.use(express.json());
 
 // Set Postgres Session
 const pgSession = postgresSession(expressSession);
+const cookieSettings = {
+  secure: production,
+  httpOnly: false,
+  sameSite: production ? "none" : undefined,
+  maxAge: 1000 * 60 * 60 * 24, // 1 day
+};
 app.use(
   expressSession({
     store: new pgSession({
@@ -39,17 +45,13 @@ app.use(
     secret: process.env.FOO_COOKIE_SECRET,
     resave: false,
     saveUninitialized: false,
-    cookie: {
-      secure: production,
-      httpOnly: false,
-      sameSite: production ? "none" : undefined,
-      maxAge: 1000 * 60 * 60 * 24, // 1 day
-    },
+    cookie: cookieSettings,
   })
 );
 
 app.get("/api", async (req, res) => {
   console.log(req.session);
+  console.log(cookieSettings);
   if (req.session.access_token) {
     res.send("logged in");
   } else res.send("not logged in");
