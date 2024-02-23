@@ -14,6 +14,7 @@ function App() {
 
   useEffect(() => {
     fetch(process.env.REACT_APP_APIURL + "/api/user", {
+      method: "GET",
       credentials: "include",
     })
       .then((response) => response.json())
@@ -24,7 +25,7 @@ function App() {
         }
       })
       .catch((err) => {
-        console.error(err);
+        console.log(err);
       });
   }, []);
 
