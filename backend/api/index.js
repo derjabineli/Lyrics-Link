@@ -14,8 +14,6 @@ const {
 dotenv.config();
 
 const FRONTENDURL = process.env.FRONTENDURL;
-
-const production = process.env.NODE_ENV === "production";
 const app = express();
 
 app.use(express.json());
@@ -23,11 +21,11 @@ app.use(express.json());
 // Set Postgres Session
 const pgSession = postgresSession(expressSession);
 const cookieSettings = {
-  secure: production,
+  secure: true,
   httpOnly: false,
-  sameSite: production ? "None" : undefined,
+  sameSite: "None",
   maxAge: 1000 * 60 * 60 * 24, // 1 day
-  path: production ? "/api" : undefined,
+  path: "/api",
 };
 app.use(
   expressSession({
