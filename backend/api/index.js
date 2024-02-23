@@ -65,6 +65,8 @@ app.get("/api/callback", async (req, res) => {
     if (!code) {
       res.redirect("/api/login");
     }
+    console.log("Code: ");
+    console.log(code);
 
     const accessData = await getPCCredentials(code);
     req.session.access_token = accessData.access_token;
