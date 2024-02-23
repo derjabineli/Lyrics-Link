@@ -12,6 +12,8 @@ const {
 } = require("../utils/planningcenter.js");
 
 dotenv.config();
+
+const FRONTENDURL = process.env.FRONTENDURL;
 const app = express();
 
 // Takes information from a request body and attaches it to request object
@@ -52,13 +54,13 @@ app.get("/api/login", async (req, res) => {
 
 app.get("/api/logout", (req, res) => {
   req.session.destroy();
-  res.redirect("http://localhost:3000/");
+  res.redirect(FRONTENDURL);
 });
 
 app.get("/api/callback", async (req, res) => {
   const code = req.query.code;
   if (!code) {
-    res.redirect("/login");
+    res.redirect("/api/login");
   }
   const accessData = await getPCCredentials(code);
   req.session.access_token = accessData.access_token;
@@ -130,7 +132,7 @@ app.post("/api/events", async (req, res) => {
       text: "INSERT INTO events (id, event_type, event_date, songs, user_id) VALUES ($1, $2, $3, $4, $5) ON CONFLICT (id) DO UPDATE SET event_type = $2, event_date = $3, songs = $4",
       values: [event_id, name, date, songs, user_id],
     });
-    res.redirect("http://localhost:3000/");
+    res.redirect(FRONTENDURL);
   } catch (error) {
     console.log(error);
   }
