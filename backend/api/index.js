@@ -18,8 +18,6 @@ const app = express();
 
 app.use(express.json());
 
-// Set Postgres Session
-const pgSession = postgresSession(expressSession);
 const cookieSettings = {
   secure: true,
   httpOnly: false,
@@ -27,6 +25,9 @@ const cookieSettings = {
   maxAge: 1000 * 60 * 60 * 24, // 1 day
   path: "/api",
 };
+
+// Set Postgres Session
+const pgSession = postgresSession(expressSession);
 app.use(
   expressSession({
     store: new pgSession({
@@ -49,6 +50,20 @@ const corsOptions = {
   exposedheaders: ["set-cookie"],
 };
 app.use(cors(corsOptions));
+
+app.use(function (req, res, next) {
+  res.setHeader("Access-Control-Allow-Origin", "http://localhost:3000");
+  res.setHeader(
+    "Access-Control-Allow-Methods",
+    "GET, POST, OPTIONS, PUT, PATCH, DELETE"
+  );
+  res.setHeader(
+    "Access-Control-Allow-Headers",
+    "X-Requested-With,content-type"
+  );
+  res.setHeader("Access-Control-Allow-Credentials", true);
+  next();
+});
 
 app.get("/api", async (req, res) => {
   console.log(req.session);
