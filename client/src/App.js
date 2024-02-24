@@ -12,6 +12,7 @@ import Live from "./routes/Live";
 function App() {
   const [loggedIn, setLoggedIn] = useState(false);
   const { user, setUser } = useContext(UserContext);
+  const [loading, setLoading] = useState(true);
 
   useEffect(() => {
     axios
@@ -19,7 +20,6 @@ function App() {
         withCredentials: true,
       })
       .then((response) => {
-        console.log(response);
         const { data } = response.data;
         if (data !== null) {
           setLoggedIn(true);
@@ -27,9 +27,17 @@ function App() {
         }
       })
       .catch((error) => {
-        console.error(error);
+        console.error("Authentication error:", error);
+      })
+      .finally(() => {
+        setLoading(false);
       });
   }, []);
+
+  if (loading) {
+    // Render a loading indicator or splash screen
+    return <div>Loading...</div>;
+  }
 
   return (
     <div className="App">
