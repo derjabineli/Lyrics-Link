@@ -6,7 +6,10 @@ import Events from "../components/Events";
 
 function DashBoard(props) {
   const { user, setUser } = useContext(UserContext);
-  const userPhoto = user.attributes.photo_url;
+
+  console.log(user);
+  const userPhoto = user.data.attributes.photo_url;
+
   return (
     <div>
       <DashNavBar userPhoto={userPhoto} />

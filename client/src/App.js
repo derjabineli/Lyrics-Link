@@ -20,10 +20,10 @@ function App() {
         withCredentials: true,
       })
       .then((response) => {
-        const { data } = response.data;
-        if (data !== null) {
+        console.log(response);
+        if (response.data.data !== undefined) {
           setLoggedIn(true);
-          setUser(data);
+          setUser(response.data);
         }
       })
       .catch((error) => {
