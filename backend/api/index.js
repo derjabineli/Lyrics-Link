@@ -52,7 +52,10 @@ const corsOptions = {
 app.use(cors(corsOptions));
 
 app.use(function (req, res, next) {
-  res.setHeader("Access-Control-Allow-Origin", FRONTENDURL);
+  res.setHeader(
+    "Access-Control-Allow-Origin",
+    "https://lyrics-link.vercel.app"
+  );
   res.setHeader(
     "Access-Control-Allow-Methods",
     "GET, POST, OPTIONS, PUT, PATCH, DELETE"
