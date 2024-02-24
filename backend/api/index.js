@@ -33,7 +33,7 @@ app.use(
     cookie: {
       secure: true,
       httpOnly: false,
-      sameSite: "lax",
+      sameSite: "None",
       maxAge: 1000 * 60 * 60 * 24, // 1 day
       path: "/api",
     },
