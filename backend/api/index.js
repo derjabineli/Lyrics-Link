@@ -20,6 +20,13 @@ app.use(express.json());
 
 // Set Postgres Session
 const pgSession = postgresSession(expressSession);
+const cookieSettings = {
+  secure: false,
+  httpOnly: false,
+  //   sameSite: "None",
+  maxAge: 1000 * 60 * 60 * 24, // 1 day
+  path: "/api",
+};
 app.use(
   expressSession({
     store: new pgSession({
@@ -30,13 +37,7 @@ app.use(
     secret: process.env.FOO_COOKIE_SECRET,
     resave: false,
     saveUninitialized: false,
-    cookie: {
-      secure: true,
-      httpOnly: false,
-      sameSite: "None",
-      maxAge: 1000 * 60 * 60 * 24, // 1 day
-      path: "/api",
-    },
+    cookie: cookieSettings,
   })
 );
 
@@ -47,6 +48,26 @@ const corsOptions = {
   credentials: true,
 };
 app.use(cors(corsOptions));
+
+app.get("/api", async (req, res) => {
+  console.log(req.session);
+  console.log(cookieSettings);
+  if (req.session.access_token) {
+    res.send("logged in");
+  } else res.send("not logged in");
+});
+
+// Log in
+app.get("/api/login", async (req, res) => {
+  res.redirect(
+    `https://api.planningcenteronline.com/oauth/authorize?client_id=${process.env.PCCLIENTID}&redirect_uri=${process.env.REDIRECTURI}&response_type=code&scope=services people`
+  );
+});
+
+app.get("/api/logout", (req, res) => {
+  req.session.destroy();
+  res.redirect(FRONTENDURL);
+});
 
 app.get("/api/callback", async (req, res) => {
   try {
@@ -86,26 +107,6 @@ app.get("/api/callback", async (req, res) => {
   } catch (error) {
     console.warn(error);
   }
-});
-
-app.get("/api", async (req, res) => {
-  console.log(req.session);
-  console.log(req.session.cookie);
-  if (req.session.access_token) {
-    res.send("logged in");
-  } else res.send("not logged in");
-});
-
-// Log in
-app.get("/api/login", async (req, res) => {
-  res.redirect(
-    `https://api.planningcenteronline.com/oauth/authorize?client_id=${process.env.PCCLIENTID}&redirect_uri=${process.env.REDIRECTURI}&response_type=code&scope=services people`
-  );
-});
-
-app.get("/api/logout", (req, res) => {
-  req.session.destroy();
-  res.redirect(FRONTENDURL);
 });
 
 app.get("/api/user", async (req, res) => {

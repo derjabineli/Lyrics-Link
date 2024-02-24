@@ -2,7 +2,6 @@ import React, { useState, useEffect, useContext } from "react";
 import "./App.css";
 import { BrowserRouter as Router, Route, Routes } from "react-router-dom";
 import { UserContext } from "./context/UserContext";
-import axios from "axios";
 import Login from "./routes/Login";
 import DashBoard from "./routes/DashBoard";
 import EventEdit from "./routes/EventEdit";
@@ -12,32 +11,29 @@ import Live from "./routes/Live";
 function App() {
   const [loggedIn, setLoggedIn] = useState(false);
   const { user, setUser } = useContext(UserContext);
-  const [loading, setLoading] = useState(true);
 
   useEffect(() => {
-    axios
-      .get(process.env.REACT_APP_APIURL + `/api/user`, {
-        withCredentials: true,
-      })
-      .then((response) => {
-        console.log(response);
-        if (response.data.data !== undefined) {
+    fetch(process.env.REACT_APP_APIURL + "/api/user", {
+      method: "GET",
+      headers: {
+        Accept: "application/json",
+        "Content-Type": "application/json",
+        Cache: "no-cache",
+      },
+      credentials: "include",
+    })
+      .then((response) => response.json())
+      .then((data) => {
+        console.log(data);
+        if (data.data != null) {
           setLoggedIn(true);
-          setUser(response.data);
+          setUser(data.data);
         }
       })
-      .catch((error) => {
-        console.error("Authentication error:", error);
-      })
-      .finally(() => {
-        setLoading(false);
+      .catch((err) => {
+        console.log(err);
       });
   }, []);
-
-  if (loading) {
-    // Render a loading indicator or splash screen
-    return <div>Loading...</div>;
-  }
 
   return (
     <div className="App">
