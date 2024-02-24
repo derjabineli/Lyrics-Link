@@ -2,6 +2,7 @@ import React, { useState, useEffect, useContext } from "react";
 import "./App.css";
 import { BrowserRouter as Router, Route, Routes } from "react-router-dom";
 import { UserContext } from "./context/UserContext";
+import axios from "axios";
 import Login from "./routes/Login";
 import DashBoard from "./routes/DashBoard";
 import EventEdit from "./routes/EventEdit";
@@ -13,25 +14,25 @@ function App() {
   const { user, setUser } = useContext(UserContext);
 
   useEffect(() => {
-    fetch(process.env.REACT_APP_APIURL + "/api/user", {
-      method: "GET",
-      headers: {
-        Accept: "application/json",
-        "Content-Type": "application/json",
-        Cache: "no-cache",
-      },
-      credentials: "include",
-    })
-      .then((response) => response.json())
-      .then((data) => {
-        console.log(data);
-        if (data.data != null) {
+    axios
+      .get(`${process.env.REACT_APP_APIURL}/api/user`, {
+        withCredentials: true,
+        headers: {
+          Accept: "application/json",
+          "Content-Type": "application/json",
+          "Cache-Control": "no-cache",
+        },
+      })
+      .then((response) => {
+        console.log(response.data);
+        const { data } = response.data;
+        if (data !== null) {
           setLoggedIn(true);
-          setUser(data.data);
+          setUser(data);
         }
       })
-      .catch((err) => {
-        console.log(err);
+      .catch((error) => {
+        console.error(error);
       });
   }, []);
 
