@@ -33,7 +33,7 @@ app.use(
     secret: process.env.FOO_COOKIE_SECRET,
     resave: false,
     saveUninitialized: false,
-    cookie: { maxAge: 1000 * 60 * 60 * 24, httpOnly: false }, // 1 day
+    cookie: { maxAge: 1000 * 60 * 60 * 24, httpOnly: false, path: "/api" }, // 1 day
   })
 );
 app.get("/api", async (req, res) => {
