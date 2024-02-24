@@ -46,6 +46,7 @@ const corsOptions = {
   origin: FRONTENDURL,
   optionsSuccessStatus: 200, // some legacy browsers (IE11, various SmartTVs) choke on 204
   credentials: true,
+  exposedheaders: ["set-cookie"],
 };
 app.use(cors(corsOptions));
 
