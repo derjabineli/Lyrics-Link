@@ -18,14 +18,6 @@ const app = express();
 
 app.use(express.json());
 
-const cookieSettings = {
-  secure: true,
-  httpOnly: false,
-  //   sameSite: "None",
-  maxAge: 1000 * 60 * 60 * 24, // 1 day
-  path: "/api",
-};
-
 // Set Postgres Session
 const pgSession = postgresSession(expressSession);
 app.use(
@@ -38,7 +30,13 @@ app.use(
     secret: process.env.FOO_COOKIE_SECRET,
     resave: false,
     saveUninitialized: false,
-    cookie: cookieSettings,
+    cookie: {
+      secure: true,
+      httpOnly: false,
+      //   sameSite: "None",
+      maxAge: 1000 * 60 * 60 * 24, // 1 day
+      path: "/api",
+    },
   })
 );
 
@@ -47,7 +45,6 @@ const corsOptions = {
   origin: FRONTENDURL,
   optionsSuccessStatus: 200, // some legacy browsers (IE11, various SmartTVs) choke on 204
   credentials: true,
-  exposedheaders: ["set-cookie"],
 };
 app.use(cors(corsOptions));
 
