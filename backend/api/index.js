@@ -21,7 +21,7 @@ app.use(express.json());
 // Set Postgres Session
 const pgSession = postgresSession(expressSession);
 const cookieSettings = {
-  secure: false,
+  secure: true,
   httpOnly: false,
   //   sameSite: "None",
   maxAge: 1000 * 60 * 60 * 24, // 1 day
