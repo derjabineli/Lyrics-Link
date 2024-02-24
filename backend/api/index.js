@@ -13,7 +13,7 @@ const {
 
 dotenv.config();
 
-const FRONTENDURL = process.env.FRONTENDURL;
+const FRONTENDURL = "https://lyrics-link.vercel.app";
 const app = express();
 
 app.use(express.json());
