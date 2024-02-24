@@ -13,7 +13,7 @@ const {
 
 dotenv.config();
 
-const FRONTENDURL = "https://lyrics-link.vercel.app";
+const FRONTENDURL = process.env.FRONTENDURL;
 const app = express();
 
 app.use(express.json());
@@ -50,23 +50,6 @@ const corsOptions = {
   exposedheaders: ["set-cookie"],
 };
 app.use(cors(corsOptions));
-
-app.use(function (req, res, next) {
-  res.setHeader(
-    "Access-Control-Allow-Origin",
-    "https://lyrics-link.vercel.app"
-  );
-  res.setHeader(
-    "Access-Control-Allow-Methods",
-    "GET, POST, OPTIONS, PUT, PATCH, DELETE"
-  );
-  res.setHeader(
-    "Access-Control-Allow-Headers",
-    "X-Requested-With,content-type"
-  );
-  res.setHeader("Access-Control-Allow-Credentials", true);
-  next();
-});
 
 app.get("/api", async (req, res) => {
   console.log(req.session);
