@@ -15,6 +15,11 @@ function App() {
   useEffect(() => {
     fetch(process.env.REACT_APP_APIURL + "/api/user", {
       method: "GET",
+      headers: {
+        Accept: "application/json",
+        "Content-Type": "application/json",
+        Cache: "no-cache",
+      },
       credentials: "include",
     })
       .then((response) => response.json())
