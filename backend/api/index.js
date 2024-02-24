@@ -48,26 +48,6 @@ const corsOptions = {
 };
 app.use(cors(corsOptions));
 
-app.get("/api", async (req, res) => {
-  console.log(req.session);
-  console.log(cookieSettings);
-  if (req.session.access_token) {
-    res.send("logged in");
-  } else res.send("not logged in");
-});
-
-// Log in
-app.get("/api/login", async (req, res) => {
-  res.redirect(
-    `https://api.planningcenteronline.com/oauth/authorize?client_id=${process.env.PCCLIENTID}&redirect_uri=${process.env.REDIRECTURI}&response_type=code&scope=services people`
-  );
-});
-
-app.get("/api/logout", (req, res) => {
-  req.session.destroy();
-  res.redirect(FRONTENDURL);
-});
-
 app.get("/api/callback", async (req, res) => {
   try {
     const code = req.query.code;
@@ -106,6 +86,26 @@ app.get("/api/callback", async (req, res) => {
   } catch (error) {
     console.warn(error);
   }
+});
+
+app.get("/api", async (req, res) => {
+  console.log(req.session);
+  console.log(req.session.cookie);
+  if (req.session.access_token) {
+    res.send("logged in");
+  } else res.send("not logged in");
+});
+
+// Log in
+app.get("/api/login", async (req, res) => {
+  res.redirect(
+    `https://api.planningcenteronline.com/oauth/authorize?client_id=${process.env.PCCLIENTID}&redirect_uri=${process.env.REDIRECTURI}&response_type=code&scope=services people`
+  );
+});
+
+app.get("/api/logout", (req, res) => {
+  req.session.destroy();
+  res.redirect(FRONTENDURL);
 });
 
 app.get("/api/user", async (req, res) => {
