@@ -15,16 +15,11 @@ function App() {
 
   useEffect(() => {
     axios
-      .get(`${process.env.REACT_APP_APIURL}/api/user`, {
+      .get(process.env.REACT_APP_APIURL + `/api/user`, {
         withCredentials: true,
-        headers: {
-          Accept: "application/json",
-          "Content-Type": "application/json",
-          "Cache-Control": "no-cache",
-        },
       })
       .then((response) => {
-        console.log(response.data);
+        console.log(response);
         const { data } = response.data;
         if (data !== null) {
           setLoggedIn(true);
