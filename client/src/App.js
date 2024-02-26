@@ -1,6 +1,7 @@
 import React, { useState, useEffect, useContext } from "react";
 import "./App.css";
 import { BrowserRouter as Router, Route, Routes } from "react-router-dom";
+import Cookies from "js-cookie";
 import { UserContext } from "./context/UserContext";
 import Login from "./routes/Login";
 import DashBoard from "./routes/DashBoard";
@@ -13,13 +14,10 @@ function App() {
   const { user, setUser } = useContext(UserContext);
 
   useEffect(() => {
+    console.log(Cookies.get("connect.sid"));
+
     fetch(process.env.REACT_APP_APIURL + "/api/user", {
       method: "GET",
-      headers: {
-        Accept: "application/json",
-        "Content-Type": "application/json",
-        Cache: "no-cache",
-      },
       credentials: "include",
     })
       .then((response) => response.json())
