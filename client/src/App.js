@@ -14,7 +14,7 @@ function App() {
   const { user, setUser } = useContext(UserContext);
 
   useEffect(() => {
-    console.log(Cookies.get("connect.sid"));
+    console.log(Cookies.get());
 
     fetch(process.env.REACT_APP_APIURL + "/api/user", {
       method: "GET",
