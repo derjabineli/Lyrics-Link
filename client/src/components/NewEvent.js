@@ -24,7 +24,7 @@ const EditEvent = ({ user_id }) => {
       headers: {
         "Content-Type": "application/json",
       },
-      credentials: "same-origin",
+      credentials: "include",
       body: JSON.stringify(data),
     });
 
@@ -35,7 +35,10 @@ const EditEvent = ({ user_id }) => {
   };
 
   const fetchSong = async (songId) => {
-    const res = await fetch(`/api/song/?id=${songId}`);
+    const res = await fetch(`/api/song/?id=${songId}`, {
+      method: "GET",
+      credentials: "include",
+    });
     const data = await res.json();
     return await data;
   };
