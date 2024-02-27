@@ -6,6 +6,7 @@ const SongCard = ({ fetchSong, removeSong, eventSongs, songId }) => {
 
   useEffect(() => {
     fetchSong(songId).then((data) => {
+      console.log(data);
       setSongData(data);
     });
   }, [eventSongs]);
