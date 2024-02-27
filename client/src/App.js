@@ -18,9 +18,13 @@ function App() {
     const sessionId = Cookies.get("connect.sid");
     console.log(sessionId);
 
-    axios.get(process.env.REACT_APP_APIURL + "/api/user").then((response) => {
-      console.log(response);
-    });
+    axios
+      .get(process.env.REACT_APP_APIURL + "/api/user", {
+        withCredentials: true,
+      })
+      .then((response) => {
+        console.log(response);
+      });
 
     // fetch(process.env.REACT_APP_APIURL + "/api/user", {
     //   method: "GET",
