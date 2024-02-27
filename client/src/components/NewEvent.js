@@ -4,7 +4,7 @@ import "./EditEvent.css";
 import Songs from "./Songs";
 import SongCard from "./SongCard";
 
-const EditEvent = ({ id }) => {
+const EditEvent = ({ user_id }) => {
   const navigate = useNavigate();
 
   const [name, setName] = useState("");
@@ -12,7 +12,12 @@ const EditEvent = ({ id }) => {
   const [eventSongs, setEventSongs] = useState([]);
 
   const handleCreate = async (e) => {
-    const data = { name: name, date: date, songs: eventSongs };
+    const data = {
+      name: name,
+      date: date,
+      songs: eventSongs,
+      user_id: user_id,
+    };
 
     const response = await fetch(process.env.REACT_APP_APIURL + "/api/events", {
       method: "POST",
