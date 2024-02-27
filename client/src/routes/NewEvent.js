@@ -6,7 +6,6 @@ import { UserContext } from "../context/UserContext";
 
 const EventEdit = () => {
   const { user, setUser } = useContext(UserContext);
-  const { id } = useParams();
   let userPhoto;
 
   if (user) {
@@ -16,7 +15,7 @@ const EventEdit = () => {
   return (
     <div>
       <DashNavBar userPhoto={userPhoto} />
-      <NewEvent id={id} />
+      <NewEvent user_id={user.id} />
     </div>
   );
 };
