@@ -18,29 +18,21 @@ function App() {
     const sessionId = Cookies.get("connect.sid");
     console.log(sessionId);
 
-    axios
-      .get(process.env.REACT_APP_APIURL + "/api/user", {
-        withCredentials: true,
+    fetch(process.env.REACT_APP_APIURL + "/api/user", {
+      method: "GET",
+      credentials: "include",
+    })
+      .then((response) => response.json())
+      .then((data) => {
+        console.log(data);
+        if (data.data != null) {
+          setLoggedIn(true);
+          setUser(data.data);
+        }
       })
-      .then((response) => {
-        console.log(response);
+      .catch((err) => {
+        console.log(err);
       });
-
-    // fetch(process.env.REACT_APP_APIURL + "/api/user", {
-    //   method: "GET",
-    //   credentials: "include",
-    // })
-    //   .then((response) => response.json())
-    //   .then((data) => {
-    //     console.log(data);
-    //     if (data.data != null) {
-    //       setLoggedIn(true);
-    //       setUser(data.data);
-    //     }
-    //   })
-    //   .catch((err) => {
-    //     console.log(err);
-    //   });
   }, []);
 
   return (
