@@ -6,8 +6,6 @@ import Events from "../components/Events";
 
 function DashBoard(props) {
   const { user, setUser } = useContext(UserContext);
-
-  console.log(user);
   const userPhoto = user.attributes.photo_url;
 
   return (

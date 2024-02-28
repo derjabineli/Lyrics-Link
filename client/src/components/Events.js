@@ -11,7 +11,6 @@ function Events() {
     })
       .then((res) => res.json())
       .then((data) => {
-        console.log(data);
         setEvents((oldArray) => [...data]);
       });
   }, []);
