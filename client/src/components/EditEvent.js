@@ -17,7 +17,6 @@ const EditEvent = ({ id }) => {
     })
       .then((response) => response.json())
       .then((data) => {
-        console.log(data);
         const event = data.rows[0];
         setName(event.event_type);
         setDate(event.event_date.substring(0, 10));
@@ -37,7 +36,7 @@ const EditEvent = ({ id }) => {
       }
     );
     const data = await res.json();
-    return await data;
+    return data;
   };
 
   const handleSave = (e) => {
@@ -50,7 +49,7 @@ const EditEvent = ({ id }) => {
       headers: {
         "Content-Type": "application/json",
       },
-      credentials: "same-origin",
+      credentials: "include",
       body: JSON.stringify(data),
     }).then((res) => {
       console.log(res);
