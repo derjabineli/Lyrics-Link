@@ -13,7 +13,6 @@ function Songs(props) {
       process.env.REACT_APP_APIURL + `/api/songs?search=${search}`,
       { credentials: "include" }
     );
-    console.log(res);
     const data = await res.json();
     setResults(data.data);
 

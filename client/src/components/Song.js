@@ -25,7 +25,7 @@ function Song({ id, title, author, link, setSongs }) {
           },
           credentials: "include",
           body: JSON.stringify(postData),
-        }).then((res) => console.log(res));
+        }).then((res) => res);
       });
   };
 
