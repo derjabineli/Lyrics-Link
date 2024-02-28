@@ -52,7 +52,9 @@ const EditEvent = ({ id }) => {
       credentials: "include",
       body: JSON.stringify(data),
     }).then((res) => {
-      console.log(res);
+      if (res.status === 200) {
+        navigate("/");
+      }
     });
 
     // console.log(response);
