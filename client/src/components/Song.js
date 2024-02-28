@@ -28,7 +28,7 @@ function Song({ id, title, author, link, setSongs }) {
         headers: {
           "Content-Type": "application/json",
         },
-        credentials: "same-origin",
+        credentials: "include",
         body: JSON.stringify(postData),
       }
     );
