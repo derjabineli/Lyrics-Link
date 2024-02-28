@@ -12,6 +12,8 @@ const EditEvent = () => {
   const [eventSongs, setEventSongs] = useState([]);
 
   const handleCreate = async (e) => {
+    e.preventDefault();
+
     const data = {
       name: name,
       date: date,
