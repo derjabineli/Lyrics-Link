@@ -1,8 +1,6 @@
 import React, { useState, useEffect, useContext } from "react";
 import "./App.css";
 import { BrowserRouter as Router, Route, Routes } from "react-router-dom";
-import Cookies from "js-cookie";
-import axios from "axios";
 import { UserContext } from "./context/UserContext";
 import Login from "./routes/Login";
 import DashBoard from "./routes/DashBoard";
@@ -15,16 +13,12 @@ function App() {
   const { user, setUser } = useContext(UserContext);
 
   useEffect(() => {
-    const sessionId = Cookies.get("connect.sid");
-    console.log(sessionId);
-
     fetch(process.env.REACT_APP_APIURL + "/api/user", {
       method: "GET",
       credentials: "include",
     })
       .then((response) => response.json())
       .then((data) => {
-        console.log(data);
         if (data.data != null) {
           setLoggedIn(true);
           setUser(data.data);
