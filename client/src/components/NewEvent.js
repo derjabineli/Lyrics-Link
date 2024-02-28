@@ -11,7 +11,7 @@ const EditEvent = () => {
   const [date, setDate] = useState("");
   const [eventSongs, setEventSongs] = useState([]);
 
-  const handleCreate = async (e) => {
+  const handleCreate = (e) => {
     e.preventDefault();
 
     const data = {
@@ -20,36 +20,36 @@ const EditEvent = () => {
       songs: eventSongs,
     };
 
-    const response = await fetch(process.env.REACT_APP_APIURL + "/api/events", {
+    fetch(process.env.REACT_APP_APIURL + "/api/events", {
       method: "POST",
       headers: {
         "Content-Type": "application/json",
       },
       credentials: "include",
       body: JSON.stringify(data),
+    }).then((res) => {
+      if (res.status === 200) {
+        navigate("/");
+      }
     });
-
-    const result = await response.json();
-    if (result.status === 201) {
-      navigate("/");
-    }
   };
 
   const fetchSong = async (songId) => {
-    const res = await fetch(`/api/song/?id=${songId}`, {
-      method: "GET",
-      credentials: "include",
-    });
+    const res = await fetch(
+      process.env.REACT_APP_APIURL + `/api/song/?id=${songId}`,
+      {
+        method: "GET",
+        credentials: "include",
+      }
+    );
     const data = await res.json();
-    return await data;
+    return data;
   };
 
   const removeSong = (songId) => {
     const index = eventSongs.indexOf(songId);
-    console.log(index);
     const oldArray = eventSongs;
     const newArray = oldArray.toSpliced(index, 1);
-    console.log(newArray);
     setEventSongs(newArray);
   };
 
