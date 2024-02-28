@@ -4,7 +4,7 @@ import "./EditEvent.css";
 import Songs from "./Songs";
 import SongCard from "./SongCard";
 
-const EditEvent = ({ user_id }) => {
+const EditEvent = () => {
   const navigate = useNavigate();
 
   const [name, setName] = useState("");
@@ -16,7 +16,6 @@ const EditEvent = ({ user_id }) => {
       name: name,
       date: date,
       songs: eventSongs,
-      user_id: user_id,
     };
 
     const response = await fetch(process.env.REACT_APP_APIURL + "/api/events", {

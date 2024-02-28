@@ -15,7 +15,7 @@ const EventEdit = () => {
   return (
     <div>
       <DashNavBar userPhoto={userPhoto} />
-      <NewEvent user_id={user.id} />
+      <NewEvent />
     </div>
   );
 };
