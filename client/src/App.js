@@ -16,11 +16,6 @@ function App() {
   useEffect(() => {
     const getUser = async () => {
       if (user) {
-        const parts = user.sub.split("|");
-        const user_id = parts[2];
-
-        console.log(user_id);
-
         try {
           const token = await getAccessTokenSilently({
             scope: "read:users read:current_user read:user_idp_tokens",
@@ -34,7 +29,6 @@ function App() {
             }
           );
           const userData = await response.json();
-          console.log(userData);
           setUserContext(userData.data);
         } catch (error) {
           console.log(error.message);
