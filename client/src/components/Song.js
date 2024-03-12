@@ -1,12 +1,19 @@
 import React, { useEffect, useState } from "react";
+import { useAuth0 } from "@auth0/auth0-react";
 import "./Song.css";
 
 function Song({ id, title, author, link, setSongs }) {
+  const { getAccessTokenSilently } = useAuth0();
+
   useEffect(() => {});
 
   const addSongToDB = async (songId) => {
+    const token = await getAccessTokenSilently({});
+
     fetch(process.env.REACT_APP_APIURL + `/api/song/?id=${songId}`, {
-      credentials: "include",
+      headers: {
+        authorization: `Bearer ${token}`,
+      },
     })
       .then((res) => res.json())
       .then(async (data) => {
@@ -22,8 +29,8 @@ function Song({ id, title, author, link, setSongs }) {
           method: "POST",
           headers: {
             "Content-Type": "application/json",
+            authorization: `Bearer ${token}`,
           },
-          credentials: "include",
           body: JSON.stringify(postData),
         }).then((res) => res);
       });

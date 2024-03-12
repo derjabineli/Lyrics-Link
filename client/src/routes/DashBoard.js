@@ -1,16 +1,14 @@
-import React, { useContext } from "react";
+import React, { useContext, useEffect } from "react";
 import "./Dashboard.css";
 import { UserContext } from "../context/UserContext";
 import DashNavBar from "../components/DashNavBar";
 import Events from "../components/Events";
+import { useAuth0 } from "@auth0/auth0-react";
 
 function DashBoard(props) {
-  const { user, setUser } = useContext(UserContext);
-  const userPhoto = user.attributes.photo_url;
-
   return (
     <div>
-      <DashNavBar userPhoto={userPhoto} />
+      <DashNavBar />
       <Events />
     </div>
   );

@@ -7,38 +7,56 @@ import DashBoard from "./routes/DashBoard";
 import EventEdit from "./routes/EventEdit";
 import NewEvent from "./routes/NewEvent";
 import Live from "./routes/Live";
+import { useAuth0 } from "@auth0/auth0-react";
 
 function App() {
-  const [loggedIn, setLoggedIn] = useState(false);
-  const { user, setUser } = useContext(UserContext);
+  const { getAccessTokenSilently, loading, user, isAuthenticated } = useAuth0();
+  const { userContext, setUserContext } = useContext(UserContext);
 
   useEffect(() => {
-    fetch(process.env.REACT_APP_APIURL + "/api/user", {
-      method: "GET",
-      credentials: "include",
-    })
-      .then((response) => response.json())
-      .then((data) => {
-        if (data.data != null) {
-          setLoggedIn(true);
-          setUser(data.data);
+    const getUser = async () => {
+      if (user) {
+        const parts = user.sub.split("|");
+        const user_id = parts[2];
+
+        console.log(user_id);
+
+        try {
+          const token = await getAccessTokenSilently({
+            scope: "read:users read:current_user read:user_idp_tokens",
+          });
+          const response = await fetch(
+            `${process.env.REACT_APP_APIURL}/api/user`,
+            {
+              headers: {
+                authorization: `Bearer ${token}`,
+              },
+            }
+          );
+          const userData = await response.json();
+          console.log(userData);
+          setUserContext(userData.data);
+        } catch (error) {
+          console.log(error.message);
         }
-      })
-      .catch((err) => {
-        console.log(err);
-      });
-  }, []);
+      }
+    };
+
+    getUser();
+  }, [user, isAuthenticated]);
 
   return (
     <div className="App">
       <Router>
         <Routes>
-          {!loggedIn && <Route path="/" element={<Login />} />}
-          {loggedIn && <Route path="/" element={<DashBoard />} />}
-          {loggedIn && (
+          {!isAuthenticated && <Route path="/" element={<Login />} />}
+          {isAuthenticated && (
+            <Route path="/dashboard" element={<DashBoard />} />
+          )}
+          {isAuthenticated && (
             <Route path="/event/:id/update" element={<EventEdit />} />
           )}
-          {loggedIn && <Route path="/new" element={<NewEvent />} />}
+          {isAuthenticated && <Route path="/new" element={<NewEvent />} />}
           <Route path="/live/:id" element={<Live />} />
         </Routes>
       </Router>

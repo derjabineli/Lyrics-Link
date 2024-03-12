@@ -1,45 +1,52 @@
 import React, { useState, useEffect } from "react";
 import { useNavigate } from "react-router-dom";
+import { useAuth0 } from "@auth0/auth0-react";
 import "./EditEvent.css";
 import Songs from "./Songs";
 import SongCard from "./SongCard";
 
 const EditEvent = () => {
   const navigate = useNavigate();
+  const { getAccessTokenSilently } = useAuth0();
 
   const [name, setName] = useState("");
   const [date, setDate] = useState("");
   const [eventSongs, setEventSongs] = useState([]);
 
-  const handleCreate = (e) => {
+  const handleCreate = async (e) => {
     e.preventDefault();
 
-    const data = {
-      name: name,
-      date: date,
-      songs: eventSongs,
-    };
+    const token = await getAccessTokenSilently({
+      scope: "read:users read:current_user read:user_idp_tokens",
+    });
+
+    const data = { name: name, date: date, songs: eventSongs };
 
     fetch(process.env.REACT_APP_APIURL + "/api/events", {
       method: "POST",
       headers: {
         "Content-Type": "application/json",
+        authorization: `Bearer ${token}`,
       },
-      credentials: "include",
       body: JSON.stringify(data),
     }).then((res) => {
       if (res.status === 200) {
-        navigate("/");
+        navigate("/dashboard");
       }
     });
   };
 
   const fetchSong = async (songId) => {
+    const token = await getAccessTokenSilently({
+      scope: "read:users read:current_user read:user_idp_tokens",
+    });
+
     const res = await fetch(
       process.env.REACT_APP_APIURL + `/api/song/?id=${songId}`,
       {
-        method: "GET",
-        credentials: "include",
+        headers: {
+          authorization: `Bearer ${token}`,
+        },
       }
     );
     const data = await res.json();

@@ -3,17 +3,25 @@ import { useNavigate } from "react-router-dom";
 import "./EditEvent.css";
 import Songs from "./Songs";
 import SongCard from "./SongCard";
+import { useAuth0 } from "@auth0/auth0-react";
 
 const EditEvent = ({ id }) => {
   const navigate = useNavigate();
+  const { getAccessTokenSilently } = useAuth0();
 
   const [name, setName] = useState("");
   const [date, setDate] = useState("");
   const [eventSongs, setEventSongs] = useState([]);
 
-  const getEvent = () => {
+  const getEvent = async () => {
+    const token = await getAccessTokenSilently({
+      scope: "read:users read:current_user read:user_idp_tokens",
+    });
+
     fetch(process.env.REACT_APP_APIURL + `/api/event/?id=${id}`, {
-      credentials: "include",
+      headers: {
+        authorization: `Bearer ${token}`,
+      },
     })
       .then((response) => response.json())
       .then((data) => {
@@ -25,22 +33,38 @@ const EditEvent = ({ id }) => {
   };
 
   useEffect(() => {
-    getEvent();
+    try {
+      getEvent();
+    } catch (err) {
+      console.log(err);
+    }
   }, []);
 
   const fetchSong = async (songId) => {
+    const token = await getAccessTokenSilently({
+      scope: "read:users read:current_user read:user_idp_tokens",
+    });
+
+    console.log(token);
+
     const res = await fetch(
       process.env.REACT_APP_APIURL + `/api/song/?id=${songId}`,
       {
-        credentials: "include",
+        headers: {
+          authorization: `Bearer ${token}`,
+        },
       }
     );
     const data = await res.json();
     return data;
   };
 
-  const handleSave = (e) => {
+  const handleSave = async (e) => {
     e.preventDefault();
+
+    const token = await getAccessTokenSilently({
+      scope: "read:users read:current_user read:user_idp_tokens",
+    });
 
     const data = { id: id, name: name, date: date, songs: eventSongs };
 
@@ -48,12 +72,12 @@ const EditEvent = ({ id }) => {
       method: "POST",
       headers: {
         "Content-Type": "application/json",
+        authorization: `Bearer ${token}`,
       },
-      credentials: "include",
       body: JSON.stringify(data),
     }).then((res) => {
       if (res.status === 200) {
-        navigate("/");
+        navigate("/dashboard");
       }
     });
 

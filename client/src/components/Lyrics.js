@@ -9,9 +9,7 @@ const Lyrics = ({ id }) => {
   }, []);
 
   const getLyrics = () => {
-    fetch(process.env.REACT_APP_APIURL + `/api/getSong/?id=${id}`, {
-      credentials: "include",
-    })
+    fetch(process.env.REACT_APP_APIURL + `/api/getSong/?id=${id}`, {})
       .then((res) => res.json())
       .then((data) => {
         setSongData(data);

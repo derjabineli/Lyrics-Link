@@ -1,18 +1,47 @@
-import React, { useEffect, useState } from "react";
+import React, { useEffect, useState, useContext } from "react";
 import "./Events.css";
 import Event from "./Event";
+import { useAuth0 } from "@auth0/auth0-react";
+import { UserContext } from "../context/UserContext";
 
 function Events() {
   const [events, setEvents] = useState([]);
+  const { getAccessTokenSilently } = useAuth0();
+  const { userContext, setUserContext } = useContext(UserContext);
 
   useEffect(() => {
-    fetch(process.env.REACT_APP_APIURL + "/api/events", {
-      credentials: "include",
-    })
-      .then((res) => res.json())
-      .then((data) => {
-        setEvents((oldArray) => [...data]);
-      });
+    // fetch(process.env.REACT_APP_APIURL + "/api/events", {
+    //   credentials: "include",
+    // })
+    //   .then((res) => res.json())
+    //   .then((data) => {
+    //     setEvents((oldArray) => [...data]);
+    //   });
+
+    const getEvent = async () => {
+      console.log(userContext);
+
+      try {
+        const token = await getAccessTokenSilently({
+          scope: "read:users read:current_user read:user_idp_tokens",
+        });
+        const response = await fetch(
+          process.env.REACT_APP_APIURL + "/api/events",
+          {
+            headers: {
+              authorization: `Bearer ${token}`,
+              user: userContext.id,
+            },
+          }
+        );
+        const eventData = await response.json();
+        setEvents((oldArray) => [...eventData]);
+      } catch (error) {
+        console.log(error.message);
+      }
+    };
+
+    getEvent();
   }, []);
   return (
     <>

@@ -1,17 +1,27 @@
 import React, { useEffect, useState } from "react";
+import { useAuth0 } from "@auth0/auth0-react";
 import "./SongSearch.css";
 import Song from "./Song";
 
 function Songs(props) {
+  const { getAccessTokenSilently } = useAuth0();
   const [input, setInput] = useState("");
   const [results, setResults] = useState([]);
   const [searched, setSearched] = useState(false);
   let searchTimer;
 
   const fetchSongs = async (search) => {
+    const token = await getAccessTokenSilently({
+      scope: "read:users read:current_user read:user_idp_tokens",
+    });
+
     const res = await fetch(
       process.env.REACT_APP_APIURL + `/api/songs?search=${search}`,
-      { credentials: "include" }
+      {
+        headers: {
+          authorization: `Bearer ${token}`,
+        },
+      }
     );
     const data = await res.json();
     setResults(data.data);

@@ -1,25 +1,32 @@
-import React from "react";
+import React, { useContext } from "react";
+import { UserContext } from "../context/UserContext";
+import { useAuth0 } from "@auth0/auth0-react";
 import "./navbar.css";
 import "./DashNav.css";
 
 function DashNavBar(props) {
+  const { user, setUser } = useContext(UserContext);
+  const { logout } = useAuth0();
+
   return (
     <nav>
-      <a href="/">LyricsLink.</a>
+      <a href="/dashboard">LyricsLink.</a>
       <ul>
         <li>
-          <a href={process.env.REACT_APP_APIURL + `/api/logout`}>Logout</a>
+          <a onClick={logout}>Logout</a>
         </li>
-        <li>
-          {" "}
-          <a href="/">
-            <img
-              src={props.userPhoto}
-              alt="profile_photo"
-              className="profilePhoto"
-            />
-          </a>
-        </li>
+        {props.userPhoto && (
+          <li>
+            {" "}
+            <a href="/">
+              <img
+                src={user.attributes.photo_url}
+                alt="profile_photo"
+                className="profilePhoto"
+              />
+            </a>
+          </li>
+        )}
       </ul>
     </nav>
   );
