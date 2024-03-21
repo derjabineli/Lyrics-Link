@@ -45,8 +45,6 @@ const EditEvent = ({ id }) => {
       scope: "read:users read:current_user read:user_idp_tokens",
     });
 
-    console.log(token);
-
     const res = await fetch(
       process.env.REACT_APP_APIURL + `/api/song/?id=${songId}`,
       {
