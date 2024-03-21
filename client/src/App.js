@@ -44,6 +44,7 @@ function App() {
       <Router>
         <Routes>
           {!isAuthenticated && <Route path="/" element={<Login />} />}
+          {isAuthenticated && <Route path="/" element={<DashBoard />} />}
           {isAuthenticated && (
             <Route path="/dashboard" element={<DashBoard />} />
           )}
