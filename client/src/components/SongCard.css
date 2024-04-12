@@ -24,12 +24,12 @@
 
 @media screen and (max-width: 600px) {
   .songCard {
-    width: 200px;
+    width: 100%;
     padding: 20px 10px;
   }
   .songCard_close {
     position: absolute;
-    left: 180px;
+    left: 275px;
     top: 4px;
   }
 }
@@ -48,13 +48,13 @@
 
 @media screen and (min-width: 900px) {
   .songCard {
-    width: 300px;
+    width: 286px;
     padding: 30px 10px;
   }
 
   .songCard_close {
     position: absolute;
-    left: 275px;
+    left: 265px;
     top: 5px;
   }
 }

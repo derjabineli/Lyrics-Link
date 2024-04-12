@@ -42,4 +42,10 @@
   .live_btn {
     height: 45px;
   }
+
+  .event_songs {
+    width: 100%;
+    justify-content: space-between;
+    margin-top: 20px;
+  }
 }
