@@ -1,5 +1,4 @@
 import React, { useState } from "react";
-import "./Event.css";
 
 function Event({ name, date, songCount, id }) {
   return (
