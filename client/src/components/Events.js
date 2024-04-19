@@ -18,8 +18,6 @@ function Events() {
     //   });
 
     const getEvent = async () => {
-      console.log(userContext);
-
       try {
         const token = await getAccessTokenSilently({
           scope: "read:users read:current_user read:user_idp_tokens",
