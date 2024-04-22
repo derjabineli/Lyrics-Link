@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from "react";
+import React, { useEffect, useState, useRef } from "react";
 import { useAuth0 } from "@auth0/auth0-react";
 import "./SongSearch.css";
 import Song from "./Song";
@@ -8,7 +8,7 @@ function Songs(props) {
   const [input, setInput] = useState("");
   const [results, setResults] = useState([]);
   const [searched, setSearched] = useState(false);
-  let searchTimer;
+  const searchTimerRef = useRef(null);
 
   const fetchSongs = async (search) => {
     const token = await getAccessTokenSilently({
@@ -24,6 +24,7 @@ function Songs(props) {
       }
     );
     const data = await res.json();
+    console.log(data.data);
     setResults(data.data);
 
     if (search.length !== 0) {
@@ -35,8 +36,8 @@ function Songs(props) {
 
   const handleChange = (value) => {
     setInput(value);
-    clearTimeout(searchTimer);
-    searchTimer = setTimeout(() => fetchSongs(value), 500);
+    clearTimeout(searchTimerRef.current); // Clear the previous timer
+    searchTimerRef.current = setTimeout(() => fetchSongs(value), 500);
   };
 
   return (
