@@ -52,13 +52,12 @@ function Events() {
         <div className="events">
           {events.map((service) => (
             <a href={`event/${service.id}/update`} className="events_link">
-              <Event
-                key={service.id}
-                id={service.id}
-                name={service.event_type}
-                date={service.event_date.substring(0, 10)}
-                songCount={service.songs.length}
-              />
+              <div className="event">
+                <h3>{service.event_type}</h3>
+                <hr />
+                <p>{service.event_date.substring(0, 10)}</p>
+                <p>{service.songs.length} songs</p>
+              </div>
             </a>
           ))}
         </div>
