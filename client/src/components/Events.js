@@ -1,5 +1,4 @@
 import React, { useEffect, useState, useContext } from "react";
-import Event from "./Event";
 import { useAuth0 } from "@auth0/auth0-react";
 import { UserContext } from "../context/UserContext";
 
