@@ -11,7 +11,7 @@ const EditEvent = ({ id }) => {
 
   const [name, setName] = useState("");
   const [date, setDate] = useState("");
-  const [eventSongs, setEventSongs] = useState([]);
+  const [eventSongs, seteventSongs] = useState([]);
 
   const getEvent = async () => {
     const token = await getAccessTokenSilently({
@@ -28,7 +28,7 @@ const EditEvent = ({ id }) => {
         const event = data.rows[0];
         setName(event.event_type);
         setDate(event.event_date.substring(0, 10));
-        setEventSongs(event.songs);
+        seteventSongs(event.songs);
       });
   };
 
@@ -39,6 +39,10 @@ const EditEvent = ({ id }) => {
       console.log(err);
     }
   }, []);
+
+  useEffect(() => {
+    console.log(eventSongs);
+  }, [eventSongs]);
 
   const fetchSong = async (songId) => {
     const token = await getAccessTokenSilently({
@@ -91,7 +95,7 @@ const EditEvent = ({ id }) => {
     const oldArray = eventSongs;
     const newArray = oldArray.toSpliced(index, 1);
     console.log(newArray);
-    setEventSongs(newArray);
+    seteventSongs(newArray);
   };
 
   const handleLive = () => {
@@ -129,22 +133,25 @@ const EditEvent = ({ id }) => {
             setDate(e.target.value);
           }}
         />
-        <Songs setSongs={setEventSongs} />
+        <Songs setSongs={seteventSongs} />
         <input
           className="songs_input"
           name="songs"
           value={eventSongs}
           onChange={(e) => {
-            setEventSongs(e.target.value);
+            seteventSongs(e.target.value);
           }}
         />
-        {eventSongs.length != 0 && (
+        {eventSongs.length !== 0 && (
           <div className="event_songs">
-            {eventSongs.map((songId) => (
+            {eventSongs.map((songId, index) => (
               <SongCard
+                key={songId}
+                index={index}
                 songId={songId}
                 fetchSong={fetchSong}
                 removeSong={removeSong}
+                seteventSongs={seteventSongs}
                 eventSongs={eventSongs}
               />
             ))}
