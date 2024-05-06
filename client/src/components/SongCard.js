@@ -1,4 +1,5 @@
 import React, { useEffect, useState } from "react";
+import { useAuth0 } from "@auth0/auth0-react";
 import "./SongCard.css";
 
 const SongCard = ({
@@ -6,21 +7,54 @@ const SongCard = ({
   removeSong,
   songId,
   index,
-  seteventSongs_new,
-  eventSongs_new,
+  eventSongs,
+  seteventSongs,
 }) => {
   const [songData, setSongData] = useState({});
   const [loading, setLoading] = useState(true);
-  const [open, setOpen] = useState(false);
+  const { getAccessTokenSilently } = useAuth0();
 
   useEffect(() => {
     setLoading(true);
     fetchSong(songId[0]).then((data) => {
-      console.log(data);
       setSongData(data);
       setLoading(false);
     });
   }, [fetchSong, songId]);
+
+  const changeArrangement = async (e) => {
+    const token = await getAccessTokenSilently({
+      scope: "read:users read:current_user read:user_idp_tokens",
+    });
+
+    const songs = eventSongs;
+    songs[index][1] = e.target.value;
+    seteventSongs(songs);
+
+    const arrangement = songData.data.find(
+      (element) => element.id == e.target.value
+    );
+
+    const arrangementData = {
+      id: arrangement.id,
+      song_name: songData.title,
+      chord_chart: arrangement.attributes.chord_chart,
+      chord_chart_key: arrangement.attributes.chord_chart_key,
+      has_chords: arrangement.attributes.has_chords,
+      lyrics: arrangement.attributes.lyrics,
+      song_id: songId[0],
+      arrangement_name: arrangement.attributes.name,
+    };
+
+    fetch(process.env.REACT_APP_APIURL + "/api/arrangement", {
+      method: "POST",
+      headers: {
+        "Content-Type": "application/json",
+        authorization: `Bearer ${token}`,
+      },
+      body: JSON.stringify(arrangementData),
+    }).then((res) => res);
+  };
 
   return (
     !loading && (
@@ -39,9 +73,7 @@ const SongCard = ({
           <select
             name="arrangement"
             onChange={(e) => {
-              const songs = eventSongs_new;
-              songs[index][1] = e.target.value;
-              seteventSongs_new(songs);
+              changeArrangement(e);
             }}
           >
             <option value="">--Arrangements--</option>
