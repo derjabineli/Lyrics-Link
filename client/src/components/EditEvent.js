@@ -68,7 +68,12 @@ const EditEvent = ({ id }) => {
       scope: "read:users read:current_user read:user_idp_tokens",
     });
 
-    const data = { id: id, name: name, date: date, songs: eventSongs };
+    const data = {
+      id: id,
+      name: name,
+      date: date,
+      songs: JSON.stringify(eventSongs),
+    };
 
     fetch(process.env.REACT_APP_APIURL + "/api/events", {
       method: "POST",
