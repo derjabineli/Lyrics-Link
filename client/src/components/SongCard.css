@@ -48,13 +48,13 @@
 
 @media screen and (min-width: 900px) {
   .songCard {
-    width: 286px;
+    width: 100%;
     padding: 30px 10px;
   }
 
   .songCard_close {
     position: absolute;
-    left: 265px;
-    top: 5px;
+    left: 870px;
+    top: 10px;
   }
 }
