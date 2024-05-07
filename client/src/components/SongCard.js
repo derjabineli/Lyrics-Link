@@ -77,8 +77,7 @@ const SongCard = ({
               changeArrangement(e);
             }}
           >
-            <option value="">--Arrangements--</option>
-            {songData.data.map((arrangement) => {
+            {/* {songData.data.map((arrangement) => {
               let matches = false;
               if (arrangement.id == songId[1]) {
                 matches = true;
@@ -92,7 +91,7 @@ const SongCard = ({
                   {arrangement.attributes.name}
                 </option>
               );
-            })}
+            })} */}
           </select>
         </div>
       </div>
