@@ -23,7 +23,11 @@ const Lyrics = ({ id }) => {
   return (
     <div style={{ "white-space": "pre-line" }} className="lyrics">
       <h3 className="lyric_name">{songData.song_name}</h3>
-      <div>{songData.lyrics}</div>
+      {songData.lyrics !== "" ? (
+        <div>{songData.lyrics}</div>
+      ) : (
+        <div>No lyrics available</div>
+      )}
     </div>
   );
 };
