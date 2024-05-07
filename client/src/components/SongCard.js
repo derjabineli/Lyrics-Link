@@ -20,7 +20,7 @@ const SongCard = ({
       setSongData(data);
       setLoading(false);
     });
-    console.log(songData);
+    console.log(songData.data);
   }, [fetchSong, songId]);
 
   const changeArrangement = async (e) => {
