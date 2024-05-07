@@ -24,7 +24,6 @@ function Songs(props) {
       }
     );
     const data = await res.json();
-    console.log(data.data);
     setResults(data.data);
 
     if (search.length !== 0) {
