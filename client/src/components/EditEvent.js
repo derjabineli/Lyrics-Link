@@ -40,10 +40,6 @@ const EditEvent = ({ id }) => {
     }
   }, []);
 
-  useEffect(() => {
-    console.log(eventSongs);
-  }, [eventSongs]);
-
   const fetchSong = async (songId) => {
     const token = await getAccessTokenSilently({
       scope: "read:users read:current_user read:user_idp_tokens",
@@ -96,10 +92,8 @@ const EditEvent = ({ id }) => {
 
   const removeSong = (songId) => {
     const index = eventSongs.indexOf(songId);
-    console.log(index);
     const oldArray = eventSongs;
     const newArray = oldArray.toSpliced(index, 1);
-    console.log(newArray);
     seteventSongs(newArray);
   };
 
