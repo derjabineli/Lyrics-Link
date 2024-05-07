@@ -17,10 +17,10 @@ const SongCard = ({
   useEffect(() => {
     setLoading(true);
     fetchSong(songId[0]).then((data) => {
+      console.log(data);
       setSongData(data);
       setLoading(false);
     });
-    console.log(songData.data);
   }, [fetchSong, songId]);
 
   const changeArrangement = async (e) => {
