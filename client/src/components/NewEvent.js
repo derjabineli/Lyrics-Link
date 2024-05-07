@@ -11,7 +11,7 @@ const EditEvent = () => {
 
   const [name, setName] = useState("");
   const [date, setDate] = useState("");
-  const [eventSongs, setEventSongs] = useState([]);
+  const [eventSongs, seteventSongs] = useState([]);
 
   const handleCreate = async (e) => {
     e.preventDefault();
@@ -61,7 +61,7 @@ const EditEvent = () => {
     const index = eventSongs.indexOf(songId);
     const oldArray = eventSongs;
     const newArray = oldArray.toSpliced(index, 1);
-    setEventSongs(newArray);
+    seteventSongs(newArray);
   };
 
   return (
@@ -92,13 +92,13 @@ const EditEvent = () => {
             setDate(e.target.value);
           }}
         />
-        <Songs setSongs={setEventSongs} />
+        <Songs setSongs={seteventSongs} />
         <input
           className="songs_input"
           name="songs"
           value={eventSongs}
           onChange={(e) => {
-            setEventSongs(e.target.value);
+            seteventSongs(e.target.value);
           }}
         />
         {eventSongs.length !== 0 && (
