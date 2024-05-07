@@ -11,7 +11,7 @@ const EditEvent = () => {
 
   const [name, setName] = useState("");
   const [date, setDate] = useState("");
-  const [eventSongs, setEventSongs] = useState([]);
+  const [eventSongs, seteventSongs] = useState([]);
 
   const handleCreate = async (e) => {
     e.preventDefault();
@@ -20,7 +20,11 @@ const EditEvent = () => {
       scope: "read:users read:current_user read:user_idp_tokens",
     });
 
-    const data = { name: name, date: date, songs: eventSongs };
+    const data = {
+      name: name,
+      date: date,
+      songs: JSON.stringify(eventSongs),
+    };
 
     fetch(process.env.REACT_APP_APIURL + "/api/events", {
       method: "POST",
@@ -57,7 +61,7 @@ const EditEvent = () => {
     const index = eventSongs.indexOf(songId);
     const oldArray = eventSongs;
     const newArray = oldArray.toSpliced(index, 1);
-    setEventSongs(newArray);
+    seteventSongs(newArray);
   };
 
   return (
@@ -88,16 +92,16 @@ const EditEvent = () => {
             setDate(e.target.value);
           }}
         />
-        <Songs setSongs={setEventSongs} />
+        <Songs setSongs={seteventSongs} />
         <input
           className="songs_input"
           name="songs"
           value={eventSongs}
           onChange={(e) => {
-            setEventSongs(e.target.value);
+            seteventSongs(e.target.value);
           }}
         />
-        {eventSongs.length != 0 && (
+        {eventSongs.length !== 0 && (
           <div className="event_songs">
             {eventSongs.map((songId) => (
               <SongCard

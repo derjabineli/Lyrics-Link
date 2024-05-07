@@ -13,7 +13,6 @@ const Live = () => {
       fetch(process.env.REACT_APP_APIURL + `/api/event/?id=${event_id}`, {})
         .then((response) => response.json())
         .then((data) => {
-          console.log(data.rows[0].songs);
           setSongs(data.rows[0].songs);
         });
     };

@@ -9,7 +9,11 @@ const Lyrics = ({ id }) => {
   }, []);
 
   const getLyrics = () => {
-    fetch(process.env.REACT_APP_APIURL + `/api/getSong/?id=${id}`, {})
+    fetch(
+      process.env.REACT_APP_APIURL +
+        `/api/getSong/?songId=${id[0]}&arrangementId=${id[1]}`,
+      {}
+    )
       .then((res) => res.json())
       .then((data) => {
         setSongData(data);
@@ -18,8 +22,12 @@ const Lyrics = ({ id }) => {
 
   return (
     <div style={{ "white-space": "pre-line" }} className="lyrics">
-      <h3 className="lyric_name">{songData.name}</h3>
-      <div>{songData.lyrics}</div>
+      <h3 className="lyric_name">{songData.song_name}</h3>
+      {songData.lyrics !== "" ? (
+        <div>{songData.lyrics}</div>
+      ) : (
+        <div>No lyrics available</div>
+      )}
     </div>
   );
 };

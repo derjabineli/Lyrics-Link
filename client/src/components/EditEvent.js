@@ -11,7 +11,7 @@ const EditEvent = ({ id }) => {
 
   const [name, setName] = useState("");
   const [date, setDate] = useState("");
-  const [eventSongs, setEventSongs] = useState([]);
+  const [eventSongs, seteventSongs] = useState([]);
 
   const getEvent = async () => {
     const token = await getAccessTokenSilently({
@@ -28,7 +28,7 @@ const EditEvent = ({ id }) => {
         const event = data.rows[0];
         setName(event.event_type);
         setDate(event.event_date.substring(0, 10));
-        setEventSongs(event.songs);
+        seteventSongs(event.songs);
       });
   };
 
@@ -64,7 +64,12 @@ const EditEvent = ({ id }) => {
       scope: "read:users read:current_user read:user_idp_tokens",
     });
 
-    const data = { id: id, name: name, date: date, songs: eventSongs };
+    const data = {
+      id: id,
+      name: name,
+      date: date,
+      songs: JSON.stringify(eventSongs),
+    };
 
     fetch(process.env.REACT_APP_APIURL + "/api/events", {
       method: "POST",
@@ -87,11 +92,9 @@ const EditEvent = ({ id }) => {
 
   const removeSong = (songId) => {
     const index = eventSongs.indexOf(songId);
-    console.log(index);
     const oldArray = eventSongs;
     const newArray = oldArray.toSpliced(index, 1);
-    console.log(newArray);
-    setEventSongs(newArray);
+    seteventSongs(newArray);
   };
 
   const handleLive = () => {
@@ -129,22 +132,25 @@ const EditEvent = ({ id }) => {
             setDate(e.target.value);
           }}
         />
-        <Songs setSongs={setEventSongs} />
+        <Songs setSongs={seteventSongs} />
         <input
           className="songs_input"
           name="songs"
           value={eventSongs}
           onChange={(e) => {
-            setEventSongs(e.target.value);
+            seteventSongs(e.target.value);
           }}
         />
-        {eventSongs.length != 0 && (
+        {eventSongs.length !== 0 && (
           <div className="event_songs">
-            {eventSongs.map((songId) => (
+            {eventSongs.map((songId, index) => (
               <SongCard
+                key={songId}
+                index={index}
                 songId={songId}
                 fetchSong={fetchSong}
                 removeSong={removeSong}
+                seteventSongs={seteventSongs}
                 eventSongs={eventSongs}
               />
             ))}
